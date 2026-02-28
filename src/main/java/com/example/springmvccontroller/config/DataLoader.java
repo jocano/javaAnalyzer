@@ -75,7 +75,22 @@ public class DataLoader implements CommandLineRunner {
         } else {
             System.out.println("○ Test user already exists");
         }
-        
+
+        // Create test user if it doesn't exist
+        if (!userService.existsByUsername("jose")) {
+            User test = new User();
+            test.setUsername("jose");
+            test.setPaswrd(passwordEncoder.encode("jose"));
+            test.setEmal("jose@example.com");
+            test.setRole("USER");
+            test.setEnabled(true);
+            userService.save(test);
+            System.out.println("✓ Created test user: jose/jose");
+        } else {
+            System.out.println("○ jose user already exists");
+        }
+
+
         System.out.println("=== User Data Loader Completed ===\n");
     }
 }
