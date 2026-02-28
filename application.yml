@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: spring-mvc-controller
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.example.springmvccontroller: DEBUG
+    org.springframework.security: DEBUG
+
+# Masking configuration
+masking:
+  fields:
+    # Field name -> Mask function type mapping
+    # Supported mask function types: PASSWORD_TYPE, EMAIL_TYPE, ROLE_TYPE
+    # pasword: PASSWORD_TYPE
+    # password: PASSWORD_TYPE (not used)
+    pass: PASSWORD_TYPE
+    passwrd: PASSWORD_TYPE
+    passwrd_empl: PASSWORD_TYPE
+    passwrd_empl_2: PASSWORD_TYPE
+    passwrd_empl_3: PASSWORD_TYPE
+    passwrd_empl_4: PASSWORD_TYPE
+    email: EMAIL_TYPE
+    # email: EMAIL_TYPE
+    # email2: EMAIL_TYPE
+    # email3: EMAIL_TYPE
+    # email_empl: EMAIL_TYPE
+    street: EMAIL_TYPE
+    city: EMAIL_TYPE
+    state: EMAIL_TYPE
+
+

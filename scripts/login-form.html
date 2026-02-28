@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form-Based JWT Authentication</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .step {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .step h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .result.success {
+            background-color: #d4edda;
+            border: 2px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+        
+        .result.error {
+            background-color: #f8d7da;
+            border: 2px solid #f5c6cb;
+            color: #721c24;
+            display: block;
+        }
+        
+        .result h3 {
+            margin-bottom: 15px;
+        }
+        
+        .token-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .copy-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background: #28a745;
+            font-size: 14px;
+        }
+        
+        .copy-btn:hover {
+            background: #218838;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .status.info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Form-Based JWT Authentication</h1>
+        
+        <form id="authForm">
+            <div class="form-group">
+                <label for="serverUrl">Server URL:</label>
+                <input type="text" id="serverUrl" value="http://localhost:8080" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="Enter username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+            </div>
+            
+            <button type="submit" id="loginBtn">Authenticate & Get Token</button>
+        </form>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p id="loadingText" style="margin-top: 10px;">Fetching form...</p>
+        </div>
+        
+        <div class="result" id="result">
+            <h3 id="resultTitle"></h3>
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('authForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const serverUrl = document.getElementById('serverUrl').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const loading = document.getElementById('loading');
+            const loadingText = document.getElementById('loadingText');
+            const result = document.getElementById('result');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultContent = document.getElementById('resultContent');
+            
+            // Reset UI
+            loginBtn.disabled = true;
+            loading.style.display = 'block';
+            result.className = 'result';
+            result.style.display = 'none';
+            
+            try {
+                // Step 1: GET /authenticate (expects 302 redirect)
+                loadingText.textContent = 'Step 1: Requesting /authenticate...';
+                
+                let formResponse = await fetch(`${serverUrl}/authenticate`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    redirect: 'manual' // Don't auto-follow redirect
+                });
+                
+                // Check if we got a redirect (302/301)
+                if (formResponse.status >= 300 && formResponse.status < 400) {
+                    loadingText.textContent = 'Step 2: Following redirect...';
+                    
+                    const redirectLocation = formResponse.headers.get('Location');
+                    if (!redirectLocation) {
+                        throw new Error('Redirect received but no Location header found');
+                    }
+                    
+                    // Make redirect location absolute if relative
+                    let fullRedirectUrl = redirectLocation;
+                    if (!redirectLocation.startsWith('http')) {
+                        const baseUrl = serverUrl.endsWith('/') ? serverUrl.slice(0, -1) : serverUrl;
+                        fullRedirectUrl = redirectLocation.startsWith('/')
+                            ? `${baseUrl}${redirectLocation}`
+                            : `${baseUrl}/${redirectLocation}`;
+                    }
+                    
+                    console.log(`Redirect to: ${fullRedirectUrl}`);
+                    
+                    // Step 2: Follow redirect to get the actual form
+                    formResponse = await fetch(fullRedirectUrl, {
+                        method: 'GET',
+                        credentials: 'include'
+                    });
+                    
+                    if (!formResponse.ok) {
+                        throw new Error(`Failed to fetch form page: ${formResponse.status} ${formResponse.statusText}`);
+                    }
+                    
+                    loadingText.textContent = 'Step 3: Parsing form...';
+                } else if (formResponse.status === 200) {
+                    loadingText.textContent = 'Step 2: Parsing form...';
+                } else {
+                    throw new Error(`Unexpected response: ${formResponse.status} ${formResponse.statusText}`);
+                }
+                
+                const formHtml = await formResponse.text();
+                
+                const formParser = new DOMParser();
+                const formDoc = formParser.parseFromString(formHtml, 'text/html');
+                const form = formDoc.querySelector('form');
+                
+                if (!form) {
+                    throw new Error('No form found in the response');
+                }
+                
+                let formAction = form.getAttribute('action') || '/authenticate';
+                if (!formAction.startsWith('http')) {
+                    const baseUrl = serverUrl.endsWith('/') ? serverUrl.slice(0, -1) : serverUrl;
+                    formAction = formAction.startsWith('/') 
+                        ? `${baseUrl}${formAction}` 
+                        : `${baseUrl}/${formAction}`;
+                }
+                
+                const formMethod = form.getAttribute('method') || 'POST';
+                
+                // Extract CSRF token
+                const csrfInput = form.querySelector('input[name="_csrf"], input[name="csrfToken"], input[name="csrf"]');
+                const csrfToken = csrfInput ? csrfInput.value : null;
+                
+                // Step 3: Submit credentials
+                loadingText.textContent = 'Step 4: Submitting credentials...';
+                
+                const formData = new FormData();
+                formData.append('username', username);
+                formData.append('password', password);
+                if (csrfToken) {
+                    formData.append(csrfInput.name, csrfToken);
+                }
+                
+                const loginResponse = await fetch(formAction, {
+                    method: formMethod,
+                    body: formData,
+                    credentials: 'include',
+                    redirect: 'follow'
+                });
+                
+                // Step 4: Extract token
+                loadingText.textContent = 'Step 5: Extracting token...';
+                
+                let responseText = await loginResponse.text();
+                
+                // Try to parse as JSON first
+                let token = null;
+                try {
+                    const json = JSON.parse(responseText);
+                    token = json.token;
+                } catch (e) {
+                    // Not JSON, try regex patterns
+                    const tokenMatch = responseText.match(/"token"\s*:\s*"([^"]+)"/) ||
+                                       responseText.match(/token["']?\s*[:=]\s*["']([^"']+)["']/) ||
+                                       responseText.match(/Bearer\s+([A-Za-z0-9\-_\.]+)/);
+                    if (tokenMatch) {
+                        token = tokenMatch[1];
+                    }
+                }
+                
+                loading.style.display = 'none';
+                
+                if (token) {
+                    // Success
+                    result.className = 'result success';
+                    result.style.display = 'block';
+                    resultTitle.textContent = '✅ Authentication Successful!';
+                    
+                    let html = `
+                        <p><strong>Username:</strong> ${username}</p>
+                        <p><strong>Token:</strong></p>
+                        <div class="token-display" id="tokenDisplay">${token}</div>
+                        <button class="copy-btn" onclick="copyToken()">Copy Token</button>
+                        <p style="margin-top: 15px;"><strong>Authorization Header:</strong></p>
+                        <div class="token-display">Authorization: Bearer ${token}</div>
+                        <button class="copy-btn" onclick="copyAuthHeader()">Copy Authorization Header</button>
+                    `;
+                    
+                    resultContent.innerHTML = html;
+                    
+                    // Store token globally
+                    window.currentToken = token;
+                    window.currentAuthHeader = `Authorization: Bearer ${token}`;
+                    
+                } else {
+                    // Could not extract token
+                    result.className = 'result error';
+                    result.style.display = 'block';
+                    resultTitle.textContent = '⚠️ Token Not Found Automatically';
+                    resultContent.innerHTML = `
+                        <p>Authentication may have succeeded, but token could not be extracted automatically.</p>
+                        <p style="margin-top: 10px;"><strong>Response Preview:</strong></p>
+                        <div class="token-display">${responseText.substring(0, 500)}...</div>
+                        <p style="margin-top: 10px;">Please check the response above for the token.</p>
+                    `;
+                }
+            } catch (error) {
+                loading.style.display = 'none';
+                result.className = 'result error';
+                result.style.display = 'block';
+                resultTitle.textContent = '❌ Authentication Error!';
+                resultContent.innerHTML = `
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p style="margin-top: 10px;">Please check:</p>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Server is running at ${serverUrl}</li>
+                        <li>/authenticate endpoint exists and returns a form</li>
+                        <li>Username and password are correct</li>
+                        <li>Network connectivity</li>
+                    </ul>
+                `;
+            } finally {
+                loginBtn.disabled = false;
+            }
+        });
+        
+        function copyToken() {
+            if (window.currentToken) {
+                navigator.clipboard.writeText(window.currentToken).then(() => {
+                    alert('Token copied to clipboard!');
+                }).catch(err => {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = window.currentToken;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('Token copied to clipboard!');
+                });
+            }
+        }
+        
+        function copyAuthHeader() {
+            if (window.currentAuthHeader) {
+                navigator.clipboard.writeText(window.currentAuthHeader).then(() => {
+                    alert('Authorization header copied to clipboard!');
+                }).catch(err => {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = window.currentAuthHeader;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('Authorization header copied to clipboard!');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+

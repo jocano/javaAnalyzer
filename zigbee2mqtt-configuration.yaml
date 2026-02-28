@@ -1,0 +1,136 @@
+# Zigbee2MQTT Configuration File for Raspberry Pi
+# Location: /opt/zigbee2mqtt/data/configuration.yaml (or your installation path)
+
+# Home Assistant integration
+# Set to true if you're using Home Assistant
+homeassistant: true
+
+# Permit joining - set to false after pairing devices for security
+permit_join: false
+
+# MQTT Configuration
+mqtt:
+  # MQTT broker server address
+  # For local MQTT broker (e.g., Mosquitto on same Pi):
+  server: 'mqtt://localhost:1883'
+  # For remote MQTT broker:
+  # server: 'mqtt://192.168.1.100:1883'
+  # For secure MQTT (TLS):
+  # server: 'mqtts://your-broker.com:8883'
+  
+  # MQTT base topic (default: zigbee2mqtt)
+  base_topic: zigbee2mqtt
+  
+  # MQTT authentication (uncomment if your broker requires authentication)
+  # user: 'your_mqtt_username'
+  # password: 'your_mqtt_password'
+  
+  # Keep alive interval in seconds
+  keepalive: 60
+  
+  # MQTT version (3.1.1 or 5.0)
+  version: 4
+  
+  # Retain messages
+  retain: true
+
+# Serial port configuration for Zigbee coordinator
+serial:
+  # Find your adapter port with: ls -l /dev/serial/by-id/
+  # Common ports on Raspberry Pi:
+  # - /dev/ttyACM0 (USB adapter)
+  # - /dev/ttyUSB0 (USB adapter)
+  # - /dev/ttyAMA0 (GPIO serial)
+  port: /dev/ttyACM0
+  
+  # Adapter type - depends on your coordinator
+  # Common options: zstack, deconz, zigate, ezsp
+  adapter: zstack
+  
+  # Disable LED (optional)
+  disable_led: false
+
+# Frontend (Web UI) configuration
+frontend:
+  # Enable web interface
+  enabled: true
+  
+  # Port for web interface
+  port: 8080
+  
+  # Host (0.0.0.0 allows access from any IP)
+  host: 0.0.0.0
+  
+  # Authentication (optional - uncomment to enable)
+  # auth_token: 'your-secret-token-here'
+
+# Advanced settings
+advanced:
+  # Network key - GENERATE on first run, then keep the generated key
+  # After first run, replace GENERATE with the actual key
+  network_key: GENERATE
+  
+  # Log level: debug, info, warn, error
+  log_level: info
+  
+  # Log output: console, file, syslog
+  log_output:
+    - console
+  
+  # Pan ID (optional - leave commented to auto-generate)
+  # pan_id: 0x1a62
+  
+  # Channel (Zigbee channel - 11-26, default: 11)
+  channel: 11
+  
+  # Last seen interval in seconds
+  last_seen: disable
+  
+  # Elapsed time interval in seconds
+  elapsed: false
+  
+  # Network encryption key (optional)
+  # encryption_key: GENERATE
+  
+  # Blocklist (devices to ignore)
+  # blocklist: []
+  
+  # Passlist (only allow these devices)
+  # passlist: []
+
+# Experimental features (optional)
+experimental:
+  # New API (if available in your version)
+  new_api: false
+
+# Device options (optional - configure specific devices)
+# device_options:
+#   '0x00158d0001234567':  # Device IEEE address
+#     friendly_name: 'My Device'
+#     retain: true
+
+# Groups (optional - for device groups)
+# groups:
+#   '1':
+#     friendly_name: 'Living Room'
+#     devices:
+#       - '0x00158d0001234567'
+#       - '0x00158d0001234568'
+
+# Map options (optional)
+map_options:
+  # Graphviz options for network map
+  graphviz:
+    colors:
+      fill:
+        enddevice: '#fff8ce'
+        coordinator: '#e04e5d'
+        router: '#4ea3e8'
+
+# OTA (Over-The-Air) update settings
+ota:
+  # Update check interval in hours
+  update_check_interval: 24
+  
+  # Disable OTA updates (set to true to disable)
+  disable_automatic_update_check: false

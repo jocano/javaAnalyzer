@@ -1,0 +1,25 @@
+
+
+# Masking configuration
+masking:
+  fields:
+    # Field name -> Mask function type mapping
+    # Supported mask function types: PASSWORD_TYPE, EMAIL_TYPE, ROLE_TYPE
+    # pasword: PASSWORD_TYPE
+    # password: PASSWORD_TYPE (not used)
+    pass: PASSWORD_TYPE
+    passwrd: PASSWORD_TYPE
+    passwrd_empl: PASSWORD_TYPE
+    passwrd_empl_2: PASSWORD_TYPE
+    passwrd_empl_3: PASSWORD_TYPE
+    passwrd_empl_4: PASSWORD_TYPE
+    email: EMAIL_TYPE
+    # email: EMAIL_TYPE
+    # email2: EMAIL_TYPE
+    # email3: EMAIL_TYPE
+    # email_empl: EMAIL_TYPE
+    street: EMAIL_TYPE
+    city: EMAIL_TYPE
+    state: EMAIL_TYPE
+
+

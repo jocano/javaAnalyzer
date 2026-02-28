@@ -1,0 +1,12 @@
+package com.example.springmvccontroller.model;
+public class Address {
+    @MaskedField(maskFunctionType = "ADDRESS_TYPE")
+    public String street;
+    @MaskedField(maskFunctionType = "ADDRESS_TYPE")
+    public String city;
+    public Address() {}
+    public Address(String street, String city) {
+        this.street = street;
+        this.city = city;
+    }
+}
