@@ -21,7 +21,7 @@
       margin-bottom: 1rem;
     }
     label { display: block; font-size: 0.85rem; color: #aaa; }
-    input[type="text"], input[type="color"], input[type="number"], textarea {
+    input[type="text"], input[type="color"], input[type="number"], textarea, select {
       width: 100%;
       padding: 0.5rem;
       border: 1px solid #444;
@@ -63,9 +63,25 @@
       <textarea id="text" rows="5" placeholder="Your post text (multiple lines allowed)" maxlength="2000">Hello, World!</textarea>
       <span class="hint">Several lines supported. Max 2000 characters.</span>
     </div>
+    <div class="row">
+      <div>
+        <label>Background color 1</label>
+        <input type="color" id="bgColor" value="#1877f2">
+      </div>
+      <div>
+        <label>Background color 2</label>
+        <input type="color" id="bgColor2" value="#0d47a1">
+      </div>
+    </div>
     <div>
-      <label>Background color</label>
-      <input type="color" id="bgColor" value="#1877f2">
+      <label>Background style</label>
+      <select id="bgStyle">
+        <option value="diagonal">Diagonal split</option>
+        <option value="gradient">Diagonal gradient</option>
+        <option value="curved">Curved split</option>
+        <option value="wave">Wave split</option>
+      </select>
+      <span class="hint">Two colors with a non-rectangular separation.</span>
     </div>
     <div class="row">
       <div>
@@ -81,6 +97,11 @@
       <label>Text font size (px)</label>
       <input type="number" id="fontSize" value="72" min="24" max="300" step="4">
       <span class="hint">Larger = bigger text. Auto-shrinks if text doesn’t fit.</span>
+    </div>
+    <div>
+      <label>Author (footer)</label>
+      <input type="text" id="author" placeholder="Author name" maxlength="100">
+      <span class="hint">Shown at the bottom of the post in small text.</span>
     </div>
     <div class="row">
       <div>
@@ -100,9 +121,12 @@
     (function () {
       const textInput = document.getElementById('text');
       const bgColorInput = document.getElementById('bgColor');
+      const bgColor2Input = document.getElementById('bgColor2');
+      const bgStyleSelect = document.getElementById('bgStyle');
       const widthInput = document.getElementById('width');
       const heightInput = document.getElementById('height');
       const fontSizeInput = document.getElementById('fontSize');
+      const authorInput = document.getElementById('author');
       const qualityInput = document.getElementById('quality');
       const drawBtn = document.getElementById('draw');
       const downloadBtn = document.getElementById('download');
@@ -116,8 +140,58 @@
         canvas.height = h;
         const ctx = canvas.getContext('2d');
 
-        ctx.fillStyle = bgColorInput.value;
-        ctx.fillRect(0, 0, w, h);
+        const c1 = bgColorInput.value;
+        const c2 = bgColor2Input.value;
+        const style = bgStyleSelect.value;
+
+        function drawTwoColorBackground(ctx, w, h, color1, color2, style) {
+          if (style === 'gradient') {
+            const g = ctx.createLinearGradient(0, 0, w, h);
+            g.addColorStop(0, color1);
+            g.addColorStop(1, color2);
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, w, h);
+            return;
+          }
+          ctx.fillStyle = color1;
+          ctx.fillRect(0, 0, w, h);
+          if (style === 'diagonal') {
+            ctx.fillStyle = color2;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(w, 0);
+            ctx.lineTo(w, h);
+            ctx.closePath();
+            ctx.fill();
+          } else if (style === 'curved') {
+            ctx.fillStyle = color2;
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(w, 0);
+            ctx.lineTo(w, h);
+            ctx.quadraticCurveTo(w * 0.3, h * 0.5, 0, h);
+            ctx.closePath();
+            ctx.fill();
+          } else if (style === 'wave') {
+            ctx.fillStyle = color2;
+            const cx = w * 0.55;
+            const amp = w * 0.08;
+            const periods = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(cx, 0);
+            for (let i = 1; i <= 80; i++) {
+              const t = i / 80;
+              const y = t * h;
+              const x = cx + amp * Math.sin(t * Math.PI * periods);
+              ctx.lineTo(x, y);
+            }
+            ctx.lineTo(w, h);
+            ctx.lineTo(w, 0);
+            ctx.closePath();
+            ctx.fill();
+          }
+        }
+        drawTwoColorBackground(ctx, w, h, c1, c2, style);
 
         const rawText = (textInput.value || ' ').trim() || 'Hello, World!';
         ctx.fillStyle = '#ffffff';
@@ -171,6 +245,16 @@
           y += fontSize * 1.35;
         }
 
+        const author = (authorInput.value || '').trim();
+        if (author) {
+          const authorFontSize = Math.max(14, Math.min(28, Math.floor(Math.min(w, h) * 0.022)));
+          ctx.font = authorFontSize + 'px system-ui, -apple-system, sans-serif';
+          ctx.fillStyle = 'rgba(255,255,255,0.92)';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(author, w / 2, h - authorFontSize * 1.8);
+        }
+
         return canvas;
       }
 
@@ -197,9 +281,12 @@
       downloadBtn.addEventListener('click', downloadImage);
       textInput.addEventListener('input', updatePreview);
       bgColorInput.addEventListener('input', updatePreview);
+      bgColor2Input.addEventListener('input', updatePreview);
+      bgStyleSelect.addEventListener('change', updatePreview);
       widthInput.addEventListener('change', updatePreview);
       heightInput.addEventListener('change', updatePreview);
       fontSizeInput.addEventListener('input', updatePreview);
+      authorInput.addEventListener('input', updatePreview);
 
       updatePreview();
     })();
