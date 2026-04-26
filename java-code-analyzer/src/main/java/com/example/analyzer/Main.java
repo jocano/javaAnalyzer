@@ -228,10 +228,9 @@ public class Main {
                             Path pumlFile = writeSequencePumlToCurrentDir(sd, puml);
                             System.out.println("PlantUML saved to " + pumlFile.toAbsolutePath());
                             System.out.println(puml);
-                            if (sd.svgOut != null) {
-                                PlantUmlSvgExporter.exportSvg(puml, sd.svgOut);
-                                System.out.println("SVG written to " + sd.svgOut.toAbsolutePath());
-                            }
+                            Path svgOut = sd.svgOut != null ? sd.svgOut : defaultSvgOutputPath(pumlFile);
+                            PlantUmlSvgExporter.exportSvg(puml, svgOut);
+                            System.out.println("SVG written to " + svgOut.toAbsolutePath());
                         } catch (Exception e) {
                             System.err.println(e.getMessage() != null ? e.getMessage() : e.toString());
                         }
@@ -387,8 +386,8 @@ public class Main {
         System.out.println("   or: sequence <fully.qualified.ClassName> <methodName> [maxDepth] [--svg <output.svg>]");
         System.out.println("   or: sequence <SimpleClassName> <methodName> [...] (when only one type has that name)");
         System.out.println("  Single token: resolves as a class (FQN or unique simple name) first, else as a unique method name.");
-        System.out.println("  maxDepth defaults to 10. --svg requires plantuml on PATH.");
-        System.out.println("  Generated .puml is always written to the current working directory.");
+        System.out.println("  maxDepth defaults to 10. SVG is rendered via kroki.io.");
+        System.out.println("  Generated .puml is always written to the current working directory; .svg too (or --svg path).");
     }
 
     private static final class SeqDiagramArgs {
@@ -654,5 +653,14 @@ public class Main {
             t = t.substring(0, 180);
         }
         return t;
+    }
+
+    private static Path defaultSvgOutputPath(Path pumlFile) {
+        String pumlName = pumlFile.getFileName().toString();
+        String svgName = pumlName.endsWith(".puml")
+            ? pumlName.substring(0, pumlName.length() - ".puml".length()) + ".svg"
+            : pumlName + ".svg";
+        Path parent = pumlFile.toAbsolutePath().getParent();
+        return parent != null ? parent.resolve(svgName) : Path.of(svgName);
     }
 }

@@ -1,21 +1,25 @@
 package com.example.analyzer.seq;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
- * Runs the {@code plantuml} CLI to render SVG. Requires {@code plantuml} on {@code PATH}.
+ * Renders PlantUML to SVG via https://kroki.io.
  */
 public final class PlantUmlSvgExporter {
+
+    private static final URI KROKI_PLANTUML_SVG_ENDPOINT = URI.create("https://kroki.io/plantuml/svg");
 
     private PlantUmlSvgExporter() {}
 
     /**
-     * Writes PlantUML source to a temp file, runs {@code plantuml -tsvg}, moves the SVG to {@code targetSvg}.
+     * Sends PlantUML source to Kroki and writes returned SVG to {@code targetSvg}.
      *
      * @return the path to the written SVG
      */
@@ -24,41 +28,20 @@ public final class PlantUmlSvgExporter {
         if (parent != null) {
             Files.createDirectories(parent);
         }
-        Path tempDir = Files.createTempDirectory("java-analyzer-puml");
-        Path tempPuml = tempDir.resolve("diagram.puml");
-        try {
-            Files.writeString(tempPuml, plantUml);
-            List<String> cmd = new ArrayList<>();
-            cmd.add("plantuml");
-            cmd.add("-tsvg");
-            cmd.add(tempPuml.toAbsolutePath().toString());
-            ProcessBuilder pb = new ProcessBuilder(cmd);
-            pb.directory(tempDir.toFile());
-            pb.redirectErrorStream(true);
-            Process p = pb.start();
-            boolean finished = p.waitFor(120, TimeUnit.SECONDS);
-            if (!finished) {
-                p.destroyForcibly();
-                throw new IOException("plantuml timed out");
-            }
-            if (p.exitValue() != 0) {
-                String out = new String(p.getInputStream().readAllBytes());
-                throw new IOException("plantuml exited with " + p.exitValue() + (out.isBlank() ? "" : (": " + out)));
-            }
-            Path generated = tempDir.resolve("diagram.svg");
-            if (!Files.isRegularFile(generated)) {
-                throw new IOException("Expected SVG at " + generated);
-            }
-            Files.move(generated, targetSvg, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-            return targetSvg;
-        } finally {
-            try {
-                Files.deleteIfExists(tempPuml);
-                Files.deleteIfExists(tempDir.resolve("diagram.svg"));
-                Files.deleteIfExists(tempDir);
-            } catch (IOException ignored) {
-                // best effort cleanup
-            }
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(KROKI_PLANTUML_SVG_ENDPOINT)
+            .header("Content-Type", "text/plain; charset=UTF-8")
+            .POST(HttpRequest.BodyPublishers.ofString(plantUml, StandardCharsets.UTF_8))
+            .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+            .send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+        if (response.statusCode() != 200) {
+            throw new IOException(
+                "kroki.io returned HTTP " + response.statusCode()
+                    + (response.body() == null || response.body().isBlank() ? "" : (": " + response.body()))
+            );
         }
+        Files.writeString(targetSvg, response.body(), StandardCharsets.UTF_8);
+        return targetSvg;
     }
 }
