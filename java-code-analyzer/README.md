@@ -14,12 +14,30 @@ mvn package
 Run with:
 
 ```bash
-java -jar target/java-code-analyzer-1.0.0-SNAPSHOT.jar [<project-root>]
+java -jar target/java-code-analyzer-1.0.0-SNAPSHOT.jar [--model <snapshot.json>] [<project-root>]
 ```
 
-If you omit `<project-root>`, the current directory is used. The tool scans for all `.java` files (excluding `target`, `build`, `out`, `.git`).
+If you omit `<project-root>`, the current directory is used. Without `--model`, the tool scans for all `.java` files (excluding `target`, `build`, `out`, `.git`).
 
 **Tip:** Point `<project-root>` at the module or tree you care about (for example `../src/main/java`) if you want to avoid scanning unrelated modules in a large repo.
+
+### Offline snapshot (`--model`)
+
+1. Run once against sources, then save a **full** snapshot (project index + Spring graph):
+   ```bash
+   java -jar target/java-code-analyzer-1.0.0-SNAPSHOT.jar /path/to/project
+   # at the prompt:
+   persist-model /path/to/my-analyzer-snapshot.json
+   ```
+2. Later, start **only** from that file (no directory scan). All CLI commands use the loaded data as the source of truth for types, methods, and Spring wiring:
+   ```bash
+   java -jar target/java-code-analyzer-1.0.0-SNAPSHOT.jar --model /path/to/my-analyzer-snapshot.json
+   ```
+   Equivalent: set environment variable **`JAVA_CODE_ANALYZER_MODEL`** to the same path (the file must exist).
+
+Spring-only JSON from `persist-spring-json` is **not** a full snapshot; use `persist-model` for `--model`.
+
+**Sequence diagrams** still open `.java` files using paths stored in the snapshot when you run `sequence` / `seq-diagram`; those files must still exist on disk at those paths.
 
 ## Commands (interactive CLI)
 
@@ -40,7 +58,8 @@ If you omit `<project-root>`, the current directory is used. The tool scans for 
 | `spring-beans` | List Spring stereotype beans (`@Component`, `@Service`, `@RestController`, …) discovered from annotations |
 | `spring-wiring` | List DI edges (constructor / field / setter) between beans |
 | `spring-controller-service-diagram` | Write **`spring-controllers-services-diagram.puml`** and **`.svg`** in the **current working directory**; SVG is rendered via [kroki.io](https://kroki.io) |
-| `persist-spring-json <file>` | Save beans + wiring as JSON |
+| `persist-model <file>` | Save **full** snapshot (all types, packages, methods, Spring graph) for use with `--model` |
+| `persist-spring-json <file>` | Save beans + wiring as JSON only (not usable as `--model`) |
 | `persist-spring-neo4j` | Upsert graph into Neo4j (`NEO4J_URI`, `NEO4J_USER`, `NEO4J_PASSWORD`, optional `NEO4J_DATABASE`) |
 | `persist-spring-couchbase` | Upsert into Couchbase (`COUCHBASE_CONNECTION_STRING`, `COUCHBASE_USER`, `COUCHBASE_PASSWORD`, optional `COUCHBASE_BUCKET`) |
 | `sequence` / `seq-diagram` | Generate a **PlantUML** sequence diagram for a method; always writes **`.puml`** to the current directory and **`.svg`** via kroki.io (optional `--svg <path>` to choose the SVG path). See below. |

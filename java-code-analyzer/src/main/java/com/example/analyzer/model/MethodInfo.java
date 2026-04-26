@@ -1,5 +1,8 @@
 package com.example.analyzer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +10,7 @@ import java.util.List;
 /**
  * Metadata for a public method: declaring type, name, return type, parameter types.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MethodInfo {
 
     private String declaringTypeQualifiedName;
@@ -28,6 +32,7 @@ public class MethodInfo {
     public List<String> getParameterTypes() { return parameterTypes; }
 
     /** e.g. "UserService" or "com.example.app.UserService" */
+    @JsonIgnore
     public String getDeclaringTypeSimpleName() {
         if (declaringTypeQualifiedName == null) return "";
         int dot = declaringTypeQualifiedName.lastIndexOf('.');
@@ -42,6 +47,7 @@ public class MethodInfo {
     public void setLineNumber(int lineNumber) { this.lineNumber = lineNumber; }
 
     /** Format for IntelliJ Terminal: file:///path/to/file.java:line (clickable on macOS and Windows). */
+    @JsonIgnore
     public String getSourceLocation() {
         if (sourcePath == null || lineNumber < 1) return sourcePath != null ? sourcePath : "";
         try {
@@ -53,6 +59,7 @@ public class MethodInfo {
     }
 
     /** Human-readable signature: name(paramTypes) : returnType */
+    @JsonIgnore
     public String getSignature() {
         String params = String.join(", ", parameterTypes);
         return name + "(" + params + ") : " + (returnType != null ? returnType : "void");

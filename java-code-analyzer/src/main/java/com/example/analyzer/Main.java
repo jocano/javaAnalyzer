@@ -6,7 +6,9 @@ import com.example.analyzer.model.ProjectModel;
 import com.example.analyzer.model.SpringComponent;
 import com.example.analyzer.model.SpringComponentGraph;
 import com.example.analyzer.model.TypeInfo;
+import com.example.analyzer.persistence.AnalyzerSnapshot;
 import com.example.analyzer.persistence.CouchbaseSpringGraphStore;
+import com.example.analyzer.persistence.JsonAnalyzerSnapshotStore;
 import com.example.analyzer.persistence.JsonSpringGraphStore;
 import com.example.analyzer.persistence.Neo4jSpringGraphStore;
 import com.example.analyzer.seq.PlantUmlSvgExporter;
@@ -35,7 +37,10 @@ import java.util.TreeMap;
  * CLI for querying Java source and exporting cross-reference matrices.
  * <p>
  * Usage:
- *   java -jar java-code-analyzer.jar &lt;project-root&gt;
+ *   java -jar java-code-analyzer.jar [--model &lt;snapshot.json&gt;] [&lt;project-root&gt;]
+ *   Env: JAVA_CODE_ANALYZER_MODEL=&lt;snapshot.json&gt; (same as --model when the file exists).
+ *   With --model, the CLI does not scan sources; all commands use the snapshot only (sequence still reads .java paths from the snapshot).
+ *   Create a snapshot after a normal scan: persist-model &lt;file.json&gt;
  *   Then enter commands: packages, types &lt;package&gt;, controllers, services, repositories, entities,
  *   export-csv &lt;dir&gt;, export-html &lt;file&gt;, help, quit
  */
@@ -44,28 +49,90 @@ public class Main {
     /** In-memory command history size for ↑ / ↓ recall. */
     private static final int COMMAND_HISTORY_SIZE = 5;
 
-    public static void main(String[] args) throws Exception {
-        Path projectRoot = args.length > 0
-            ? Path.of(args[0])
-            : Path.of(System.getProperty("user.dir"));
+    /** When set, load this JSON snapshot instead of scanning &lt;project-root&gt;. */
+    private static final String ENV_ANALYZER_MODEL = "JAVA_CODE_ANALYZER_MODEL";
 
-        if (!java.nio.file.Files.isDirectory(projectRoot)) {
-            System.err.println("Not a directory: " + projectRoot);
-            System.err.println("Usage: java -jar java-code-analyzer.jar [<project-root>]");
+    public static void main(String[] args) throws Exception {
+        final StartupArgs startup;
+        try {
+            startup = parseStartupArgs(args);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+            System.err.println(
+                "Usage: java -jar java-code-analyzer.jar [--model <snapshot.json>] [<project-root>]"
+            );
             return;
         }
+        ProjectModel model;
+        SpringComponentGraph springGraph;
 
-        System.out.println("Scanning " + projectRoot + " ...");
-        List<Path> javaFiles = ProjectScanner.findJavaFiles(projectRoot);
-        System.out.println("Found " + javaFiles.size() + " Java files. Parsing ...");
-        ProjectModel model = JavaAnalyzer.analyze(projectRoot, javaFiles);
-        SpringComponentGraph springGraph = SpringComponentAnalyzer.analyze(model, javaFiles);
+        if (startup.snapshotPath != null) {
+            if (!Files.exists(startup.snapshotPath)) {
+                System.err.println("Model file not found: " + startup.snapshotPath.toAbsolutePath());
+                System.err.println(
+                    "Usage: java -jar java-code-analyzer.jar [--model <snapshot.json>] [<project-root>]"
+                );
+                return;
+            }
+            try {
+                AnalyzerSnapshot snap = new JsonAnalyzerSnapshotStore().load(startup.snapshotPath);
+                if (snap.getFormatVersion() != AnalyzerSnapshot.FORMAT_VERSION) {
+                    System.err.println(
+                        "Unsupported snapshot formatVersion "
+                            + snap.getFormatVersion()
+                            + " (expected "
+                            + AnalyzerSnapshot.FORMAT_VERSION
+                            + "). Re-export with persist-model."
+                    );
+                    return;
+                }
+                model = snap.toProjectModel();
+                springGraph = snap.getSpringComponentGraph();
+                if (springGraph.getProjectRoot() == null || springGraph.getProjectRoot().isBlank()) {
+                    springGraph.setProjectRoot(model.getProjectRoot());
+                }
+                if (model.getTypesByQualifiedName().isEmpty()) {
+                    System.err.println(
+                        "Snapshot contains no types. Use a full file from 'persist-model', not spring-only JSON."
+                    );
+                    return;
+                }
+                System.out.println(
+                    "Loaded analyzer model from "
+                        + startup.snapshotPath.toAbsolutePath()
+                        + " ("
+                        + model.getTypesByQualifiedName().size()
+                        + " types, "
+                        + springGraph.getComponents().size()
+                        + " Spring beans)."
+                );
+            } catch (IOException e) {
+                System.err.println("Failed to load model: " + e.getMessage());
+                return;
+            }
+        } else {
+            Path projectRoot = startup.projectRoot;
+            if (!Files.isDirectory(projectRoot)) {
+                System.err.println("Not a directory: " + projectRoot);
+                System.err.println(
+                    "Usage: java -jar java-code-analyzer.jar [--model <snapshot.json>] [<project-root>]"
+                );
+                return;
+            }
+
+            System.out.println("Scanning " + projectRoot + " ...");
+            List<Path> javaFiles = ProjectScanner.findJavaFiles(projectRoot);
+            System.out.println("Found " + javaFiles.size() + " Java files. Parsing ...");
+            model = JavaAnalyzer.analyze(projectRoot, javaFiles);
+            springGraph = SpringComponentAnalyzer.analyze(model, javaFiles);
+        }
+
         QueryEngine q = new QueryEngine(model);
         MatrixExporter exporter = new MatrixExporter(model);
 
         System.out.println("Ready. Commands: packages | types <pkg> | methods <package|class> | controllers | services | ...");
         System.out.println("  spring-beans | spring-wiring | spring-controller-service-diagram");
-        System.out.println("  persist-spring-json <file>");
+        System.out.println("  persist-model <file> | persist-spring-json <file>");
         System.out.println("  persist-spring-neo4j | persist-spring-couchbase");
         System.out.println("  sequence <method> [depth] [--svg <file>] | sequence <FQN> <method> ...");
         System.out.println("  export-csv <dir> | export-html <file> | help | quit");
@@ -202,6 +269,22 @@ public class Main {
                         }
                         new JsonSpringGraphStore().save(springGraph, Path.of(arg));
                         System.out.println("Spring graph JSON written to " + arg);
+                        break;
+                    case "persist-model":
+                        if (arg.isEmpty()) {
+                            System.out.println("Usage: persist-model <snapshot.json>");
+                            break;
+                        }
+                        try {
+                            Path snapshotPath = Path.of(arg);
+                            new JsonAnalyzerSnapshotStore().save(
+                                AnalyzerSnapshot.capture(model, springGraph),
+                                snapshotPath
+                            );
+                            System.out.println("Full analyzer snapshot written to " + snapshotPath.toAbsolutePath());
+                        } catch (IOException e) {
+                            System.err.println(e.getMessage() != null ? e.getMessage() : e.toString());
+                        }
                         break;
                     case "persist-spring-neo4j": {
                         String uri = firstNonBlank(System.getenv("NEO4J_URI"), "neo4j://localhost:7687");
@@ -389,7 +472,8 @@ public class Main {
         System.out.println("  spring-beans          - list @Component/@Service/@RestController/… beans");
         System.out.println("  spring-wiring         - list DI edges (constructor / field / setter)");
         System.out.println("  spring-controller-service-diagram - PlantUML + SVG (kroki) in cwd");
-        System.out.println("  persist-spring-json <file> - save beans + wiring as JSON");
+        System.out.println("  persist-model <file> - save full snapshot (project + Spring graph) for --model");
+        System.out.println("  persist-spring-json <file> - save beans + wiring as JSON only");
         System.out.println("  persist-spring-neo4j  - upsert graph (NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD, NEO4J_DATABASE)");
         System.out.println("  persist-spring-couchbase - upsert docs (COUCHBASE_* env vars)");
         System.out.println("  sequence <method|class> [depth] [--svg <file>] - sequence diagram; writes .puml in cwd; class → pick #");
@@ -680,5 +764,36 @@ public class Main {
             : pumlName + ".svg";
         Path parent = pumlFile.toAbsolutePath().getParent();
         return parent != null ? parent.resolve(svgName) : Path.of(svgName);
+    }
+
+    private record StartupArgs(Path snapshotPath, Path projectRoot) {}
+
+    /**
+     * Parses {@code [--model path] [project-root]}. If {@code JAVA_CODE_ANALYZER_MODEL} is set and
+     * {@code --model} is absent, uses that path as the snapshot file (must exist to trigger load).
+     */
+    private static StartupArgs parseStartupArgs(String[] args) {
+        Path snapshotPath = null;
+        Path projectRoot = null;
+        for (int i = 0; i < args.length; i++) {
+            if ("--model".equals(args[i])) {
+                if (i + 1 >= args.length) {
+                    throw new IllegalArgumentException("--model requires a file path");
+                }
+                snapshotPath = Path.of(args[++i]);
+            } else if (!args[i].startsWith("-")) {
+                if (projectRoot == null) {
+                    projectRoot = Path.of(args[i]);
+                }
+            }
+        }
+        String envSnapshot = System.getenv(ENV_ANALYZER_MODEL);
+        if (snapshotPath == null && envSnapshot != null && !envSnapshot.isBlank()) {
+            snapshotPath = Path.of(envSnapshot.trim());
+        }
+        if (projectRoot == null) {
+            projectRoot = Path.of(System.getProperty("user.dir"));
+        }
+        return new StartupArgs(snapshotPath, projectRoot);
     }
 }

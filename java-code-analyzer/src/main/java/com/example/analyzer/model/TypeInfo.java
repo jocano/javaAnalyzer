@@ -1,5 +1,8 @@
 package com.example.analyzer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -9,6 +12,7 @@ import java.util.Map;
 /**
  * Metadata for a Java type (class, interface, enum) extracted from source.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TypeInfo {
 
     public enum Kind { CLASS, INTERFACE, ENUM }
@@ -78,6 +82,7 @@ public class TypeInfo {
     public void setLineNumber(int lineNumber) { this.lineNumber = lineNumber; }
 
     /** Format for IntelliJ Terminal: file:///path/to/file.java:line (clickable on macOS and Windows). */
+    @JsonIgnore
     public String getSourceLocation() {
         if (sourcePath == null || lineNumber < 1) return sourcePath != null ? sourcePath : "";
         try {
