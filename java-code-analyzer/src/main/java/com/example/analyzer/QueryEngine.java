@@ -83,8 +83,8 @@ public class QueryEngine {
     }
 
     /**
-     * Package dependencies: for each package, the set of other packages it uses (from field types, extends, implements).
-     * Only includes types that exist in the project. Sorted by package name.
+     * Package dependencies: for each package, the set of other packages it uses (extends, implements, field types,
+     * and {@code import} / {@code import static} of in-project types). Method bodies and parameters are not analyzed.
      */
     public Map<String, Set<String>> getPackageDependencies() {
         TreeMap<String, Set<String>> deps = new TreeMap<>();
@@ -93,23 +93,64 @@ public class QueryEngine {
             Set<String> used = deps.computeIfAbsent(fromPkg, k -> new TreeSet<>());
             addUsedPackages(from, fromPkg, used);
         }
+        for (var e : model.getPackageImportDependencies().entrySet()) {
+            String fromPkg = e.getKey();
+            Set<String> used = deps.computeIfAbsent(fromPkg, k -> new TreeSet<>());
+            for (String toPkg : e.getValue()) {
+                addPackageIfDifferent(toPkg, fromPkg, used);
+            }
+        }
         return deps;
     }
 
     private void addUsedPackages(TypeInfo from, String fromPkg, Set<String> used) {
         String pkg = from.getPackageName() != null ? from.getPackageName() : "";
         if (from.getExtendsType() != null) {
-            TypeInfo t = model.getType(resolveQualified(from.getExtendsType(), pkg));
-            if (t != null) addPackageIfDifferent(t.getPackageName(), fromPkg, used);
+            TypeInfo t = resolveReferencedType(from.getExtendsType(), pkg);
+            if (t != null) {
+                addPackageIfDifferent(t.getPackageName(), fromPkg, used);
+            }
         }
         for (String impl : from.getImplementsTypes()) {
-            TypeInfo t = model.getType(resolveQualified(impl, pkg));
-            if (t != null) addPackageIfDifferent(t.getPackageName(), fromPkg, used);
+            TypeInfo t = resolveReferencedType(impl, pkg);
+            if (t != null) {
+                addPackageIfDifferent(t.getPackageName(), fromPkg, used);
+            }
         }
         for (String fieldType : from.getFieldTypes()) {
-            TypeInfo t = model.getType(resolveQualified(fieldType, pkg));
-            if (t != null) addPackageIfDifferent(t.getPackageName(), fromPkg, used);
+            TypeInfo t = resolveReferencedType(fieldType, pkg);
+            if (t != null) {
+                addPackageIfDifferent(t.getPackageName(), fromPkg, used);
+            }
         }
+    }
+
+    /**
+     * Resolves a type reference string (as stored on {@link com.example.analyzer.model.TypeInfo} / {@link MethodInfo})
+     * to a {@link TypeInfo} in this model, or {@code null}.
+     */
+    public TypeInfo resolveTypeReference(String ref, String currentPackage) {
+        return resolveReferencedType(ref, currentPackage);
+    }
+
+    /**
+     * Resolves a reference string from the model (extends / implements / field type) to a {@link TypeInfo}, or null.
+     */
+    private TypeInfo resolveReferencedType(String ref, String currentPackage) {
+        if (ref == null || ref.isEmpty()) {
+            return null;
+        }
+        TypeInfo t = model.getType(resolveQualified(ref, currentPackage));
+        if (t != null) {
+            return t;
+        }
+        if (!ref.contains(".")) {
+            List<TypeInfo> matches = model.getTypesBySimpleName(ref);
+            if (matches.size() == 1) {
+                return matches.get(0);
+            }
+        }
+        return null;
     }
 
     private static void addPackageIfDifferent(String usedPkg, String fromPkg, Set<String> used) {

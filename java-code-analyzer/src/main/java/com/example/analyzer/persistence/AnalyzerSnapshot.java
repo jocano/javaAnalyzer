@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Serializable bundle of {@link ProjectModel} + {@link SpringComponentGraph} for offline CLI use
@@ -24,6 +26,7 @@ public class AnalyzerSnapshot {
     private String projectRoot;
     private List<TypeInfo> types = new ArrayList<>();
     private List<PackageRecord> packages = new ArrayList<>();
+    private Map<String, List<String>> packageImportDependencies = new LinkedHashMap<>();
     private SpringComponentGraph springComponentGraph = new SpringComponentGraph();
 
     public AnalyzerSnapshot() {
@@ -69,6 +72,14 @@ public class AnalyzerSnapshot {
         this.packages = packages != null ? packages : new ArrayList<>();
     }
 
+    public Map<String, List<String>> getPackageImportDependencies() {
+        return packageImportDependencies;
+    }
+
+    public void setPackageImportDependencies(Map<String, List<String>> packageImportDependencies) {
+        this.packageImportDependencies = packageImportDependencies != null ? packageImportDependencies : new LinkedHashMap<>();
+    }
+
     public SpringComponentGraph getSpringComponentGraph() {
         return springComponentGraph;
     }
@@ -94,6 +105,9 @@ public class AnalyzerSnapshot {
         }
         prs.sort(Comparator.comparing(PackageRecord::getName, Comparator.nullsFirst(String::compareTo)));
         s.setPackages(prs);
+        for (var e : model.getPackageImportDependencies().entrySet()) {
+            s.getPackageImportDependencies().put(e.getKey(), new ArrayList<>(e.getValue()));
+        }
         s.setSpringComponentGraph(springGraph);
         return s;
     }
@@ -114,6 +128,20 @@ public class AnalyzerSnapshot {
                 pi.getTypeQualifiedNames().addAll(pr.getTypeQualifiedNames());
             }
             m.getPackages().put(pkgName, pi);
+        }
+        if (packageImportDependencies != null) {
+            for (var e : packageImportDependencies.entrySet()) {
+                String from = e.getKey() != null ? e.getKey() : "";
+                List<String> targets = e.getValue();
+                if (targets == null) {
+                    continue;
+                }
+                for (String to : targets) {
+                    if (to != null) {
+                        m.addPackageImportDependency(from, to);
+                    }
+                }
+            }
         }
         return m;
     }

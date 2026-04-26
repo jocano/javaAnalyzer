@@ -134,6 +134,8 @@ public class Main {
         System.out.println("  spring-beans | spring-wiring | spring-controller-service-diagram");
         System.out.println("  persist-model <file> | persist-spring-json <file>");
         System.out.println("  persist-spring-neo4j | persist-spring-couchbase");
+        System.out.println("  package-dependencies-diagram - package graph .puml + .svg (kroki) in cwd");
+        System.out.println("  class-diagram <package> - class diagram .puml + .svg for types in package (kroki)");
         System.out.println("  sequence <method> [depth] [--svg <file>] | sequence <FQN> <method> ...");
         System.out.println("  export-csv <dir> | export-html <file> | help | quit");
 
@@ -209,6 +211,44 @@ public class Main {
                     case "pkg-deps":
                         printPackageDependencies(q.getPackageDependencies());
                         break;
+                    case "package-dependencies-diagram":
+                    case "package-diagram":
+                    case "pkg-diagram": {
+                        Path diagramDir = Path.of(System.getProperty("user.dir"));
+                        Path pumlOut = diagramDir.resolve("package-dependencies-diagram.puml");
+                        Path svgOut = diagramDir.resolve("package-dependencies-diagram.svg");
+                        try {
+                            String puml = PackageDependencyDiagramGenerator.toPlantUml(q.getPackageDependencies());
+                            Files.writeString(pumlOut, puml, StandardCharsets.UTF_8);
+                            PlantUmlSvgExporter.exportSvg(puml, svgOut);
+                            System.out.println("PlantUML written to " + pumlOut.toAbsolutePath());
+                            System.out.println("SVG (kroki.io) written to " + svgOut.toAbsolutePath());
+                        } catch (Exception ex) {
+                            System.err.println(ex.getMessage() != null ? ex.getMessage() : ex.toString());
+                        }
+                        break;
+                    }
+                    case "class-diagram": {
+                        if (arg.isBlank()) {
+                            System.out.println("Usage: class-diagram <package.name>");
+                            break;
+                        }
+                        Path classDiagramDir = Path.of(System.getProperty("user.dir"));
+                        String targetPackage = arg.trim();
+                        String classDiagramBase = ClassDiagramGenerator.fileNameBaseForPackage(targetPackage);
+                        Path classPuml = classDiagramDir.resolve(classDiagramBase + ".puml");
+                        Path classSvg = classDiagramDir.resolve(classDiagramBase + ".svg");
+                        try {
+                            String classPumlText = ClassDiagramGenerator.toPlantUml(model, q, targetPackage);
+                            Files.writeString(classPuml, classPumlText, StandardCharsets.UTF_8);
+                            PlantUmlSvgExporter.exportSvg(classPumlText, classSvg);
+                            System.out.println("PlantUML written to " + classPuml.toAbsolutePath());
+                            System.out.println("SVG (kroki.io) written to " + classSvg.toAbsolutePath());
+                        } catch (Exception ex) {
+                            System.err.println(ex.getMessage() != null ? ex.getMessage() : ex.toString());
+                        }
+                        break;
+                    }
                     case "export-csv":
                         if (arg.isEmpty()) {
                             System.out.println("Usage: export-csv <output-directory>");
@@ -467,6 +507,8 @@ public class Main {
         System.out.println("  entities              - list @Entity");
         System.out.println("  interfaces            - list all interfaces");
         System.out.println("  package-deps          - list package dependencies (grouped and sorted by package)");
+        System.out.println("  package-dependencies-diagram - PlantUML + SVG from model (same deps as package-deps; cwd)");
+        System.out.println("  class-diagram <package> - UML for types in package + related (extends/fields/methods; cwd)");
         System.out.println("  export-csv <dir>      - write CSV matrices to directory");
         System.out.println("  export-html <file>    - write single HTML cross-reference report");
         System.out.println("  spring-beans          - list @Component/@Service/@RestController/… beans");

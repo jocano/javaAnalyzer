@@ -11,12 +11,14 @@ import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.RecordDeclaration;
+import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,25 +35,26 @@ public class JavaAnalyzer {
     public static ProjectModel analyze(Path projectRoot, List<Path> javaFiles) {
         ProjectModel model = new ProjectModel();
         model.setProjectRoot(projectRoot.toAbsolutePath().toString());
+        List<CompilationUnit> compilationUnits = new ArrayList<>();
 
         for (Path file : javaFiles) {
             try {
-                parseFile(file, model);
+                CompilationUnit cu = StaticJavaParser.parse(file);
+                compilationUnits.add(cu);
+                parseCompilationUnit(cu, file, model);
             } catch (Exception e) {
                 System.err.println("Parse error " + file + ": " + e.getMessage());
             }
         }
+        for (CompilationUnit cu : compilationUnits) {
+            Optional<String> pkg = cu.getPackageDeclaration().map(pd -> pd.getNameAsString());
+            String packageName = pkg.orElse("");
+            applyImportDeclarations(packageName, cu, model);
+        }
         return model;
     }
 
-    private static void parseFile(Path file, ProjectModel model) {
-        CompilationUnit cu;
-        try {
-            cu = StaticJavaParser.parse(file);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
+    private static void parseCompilationUnit(CompilationUnit cu, Path file, ProjectModel model) {
         Optional<String> pkg = cu.getPackageDeclaration().map(pd -> pd.getNameAsString());
         String packageName = pkg.orElse("");
 
@@ -86,7 +89,8 @@ public class JavaAnalyzer {
 
             for (FieldDeclaration fd : typeDecl.getFields()) {
                 Type t = fd.getCommonType();
-                String typeName = (t instanceof ClassOrInterfaceType cit) ? cit.getNameAsString() : t.toString();
+                // Align with extends/implements: prefer scoped name so FQN-in-source resolves across packages.
+                String typeName = (t instanceof ClassOrInterfaceType cit) ? cit.getNameWithScope() : t.toString();
                 if (typeName == null || typeName.isEmpty()) continue;
                 typeName = typeName.replaceAll("<.*>", "").trim();
                 if (!typeName.equals("void") && !typeName.equals("int") && !typeName.equals("long")
@@ -101,7 +105,7 @@ public class JavaAnalyzer {
             if (typeDecl instanceof RecordDeclaration rd) {
                 for (Parameter p : rd.getParameters()) {
                     Type rt = p.getType();
-                    String typeName = (rt instanceof ClassOrInterfaceType cit) ? cit.getNameAsString() : rt.toString();
+                    String typeName = (rt instanceof ClassOrInterfaceType cit) ? cit.getNameWithScope() : rt.toString();
                     if (typeName == null || typeName.isEmpty()) continue;
                     typeName = typeName.replaceAll("<.*>", "").trim();
                     if (!typeName.equals("void") && !typeName.equals("int") && !typeName.equals("long")
@@ -125,6 +129,64 @@ public class JavaAnalyzer {
             model.getPackages().computeIfAbsent(packageName, PackageInfo::new)
                 .getTypeQualifiedNames().add(info.getQualifiedName());
         }
+    }
+
+    /**
+     * Resolves {@code import} / {@code import static} after all types are indexed so cross-file references work.
+     */
+    private static void applyImportDeclarations(String sourcePackage, CompilationUnit cu, ProjectModel model) {
+        for (ImportDeclaration imp : cu.getImports()) {
+            if (imp.isAsterisk()) {
+                String name = imp.getNameAsString();
+                if (imp.isStatic()) {
+                    TypeInfo owner = model.getType(name);
+                    if (owner != null) {
+                        model.addPackageImportDependency(sourcePackage, nz(owner.getPackageName()));
+                    }
+                } else {
+                    boolean anyInPackage = model.getTypesByQualifiedName().values().stream()
+                        .anyMatch(t -> name.equals(nz(t.getPackageName())));
+                    if (anyInPackage) {
+                        model.addPackageImportDependency(sourcePackage, name);
+                    }
+                }
+                continue;
+            }
+            String imported = imp.getNameAsString();
+            if (imp.isStatic()) {
+                TypeInfo t = resolveTypeFromStaticImport(imported, model);
+                if (t != null) {
+                    model.addPackageImportDependency(sourcePackage, nz(t.getPackageName()));
+                }
+                continue;
+            }
+            TypeInfo t = model.getType(imported);
+            if (t != null) {
+                model.addPackageImportDependency(sourcePackage, nz(t.getPackageName()));
+            }
+        }
+    }
+
+    private static TypeInfo resolveTypeFromStaticImport(String importName, ProjectModel model) {
+        String[] parts = importName.split("\\.");
+        for (int len = parts.length - 1; len >= 1; len--) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < len; i++) {
+                if (i > 0) {
+                    sb.append('.');
+                }
+                sb.append(parts[i]);
+            }
+            TypeInfo t = model.getType(sb.toString());
+            if (t != null) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+    private static String nz(String s) {
+        return s == null ? "" : s;
     }
 
     private static MethodInfo buildMethodInfo(String declaringTypeFqn, String absolutePath, MethodDeclaration md) {

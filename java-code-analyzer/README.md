@@ -37,6 +37,8 @@ If you omit `<project-root>`, the current directory is used. Without `--model`, 
 
 Spring-only JSON from `persist-spring-json` is **not** a full snapshot; use `persist-model` for `--model`.
 
+Snapshots from older exports may omit **`packageImportDependencies`**; re-run `persist-model` after upgrading so package diagrams include **import** edges when using `--model`.
+
 **Sequence diagrams** still open `.java` files using paths stored in the snapshot when you run `sequence` / `seq-diagram`; those files must still exist on disk at those paths.
 
 ## Commands (interactive CLI)
@@ -52,7 +54,9 @@ Spring-only JSON from `persist-spring-json` is **not** a full snapshot; use `per
 | `repositories` | List `@Repository` types |
 | `entities` | List `@Entity` types |
 | `interfaces` | List all interfaces |
-| `package-deps` (or `pkg-deps`) | Package dependencies: each package with the list of packages it uses (grouped and sorted by package) |
+| `package-deps` (or `pkg-deps`) | Package dependencies: extends, implements, fields, and **`import`** of in-project types |
+| `package-dependencies-diagram` (aliases: `package-diagram`, `pkg-diagram`) | **`package-dependencies-diagram.puml`** and **`.svg`** in cwd (Kroki); edges match `package-deps` (extends, implements, fields, **`import` / `import static`** of in-project types) from the loaded model only |
+| `class-diagram <package>` | Writes `class-diagram-<sanitized-package>.puml` and `.svg` in cwd (Kroki): types in that package plus related in-model types; `<|--` extends, `<|..` implements, `-->` fields, `..>` method return/parameter types |
 | `export-csv <dir>` | Write CSV matrices to a directory (see below) |
 | `export-html <file>` | Write a single HTML report with all tables |
 | `spring-beans` | List Spring stereotype beans (`@Component`, `@Service`, `@RestController`, …) discovered from annotations |
