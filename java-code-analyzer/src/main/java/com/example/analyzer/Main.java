@@ -12,6 +12,7 @@ import com.example.analyzer.persistence.Neo4jSpringGraphStore;
 import com.example.analyzer.seq.PlantUmlSvgExporter;
 import com.example.analyzer.seq.SequenceDiagramGenerator;
 import com.example.analyzer.spring.SpringComponentAnalyzer;
+import com.example.analyzer.spring.SpringControllerServiceDiagramGenerator;
 
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
@@ -63,7 +64,8 @@ public class Main {
         MatrixExporter exporter = new MatrixExporter(model);
 
         System.out.println("Ready. Commands: packages | types <pkg> | methods <package|class> | controllers | services | ...");
-        System.out.println("  spring-beans | spring-wiring | persist-spring-json <file>");
+        System.out.println("  spring-beans | spring-wiring | spring-controller-service-diagram");
+        System.out.println("  persist-spring-json <file>");
         System.out.println("  persist-spring-neo4j | persist-spring-couchbase");
         System.out.println("  sequence <method> [depth] [--svg <file>] | sequence <FQN> <method> ...");
         System.out.println("  export-csv <dir> | export-html <file> | help | quit");
@@ -178,6 +180,21 @@ public class Main {
                         }
                         System.out.println("  (" + springGraph.getInjectionEdges().size() + " edges)");
                         break;
+                    case "spring-controller-service-diagram": {
+                        Path diagramDir = Path.of(System.getProperty("user.dir"));
+                        Path pumlOut = diagramDir.resolve("spring-controllers-services-diagram.puml");
+                        Path svgOut = diagramDir.resolve("spring-controllers-services-diagram.svg");
+                        try {
+                            String puml = SpringControllerServiceDiagramGenerator.toPlantUml(springGraph);
+                            Files.writeString(pumlOut, puml, StandardCharsets.UTF_8);
+                            PlantUmlSvgExporter.exportSvg(puml, svgOut);
+                            System.out.println("PlantUML written to " + pumlOut.toAbsolutePath());
+                            System.out.println("SVG (kroki.io) written to " + svgOut.toAbsolutePath());
+                        } catch (Exception ex) {
+                            System.err.println(ex.getMessage() != null ? ex.getMessage() : ex.toString());
+                        }
+                        break;
+                    }
                     case "persist-spring-json":
                         if (arg.isEmpty()) {
                             System.out.println("Usage: persist-spring-json <file.json>");
@@ -371,6 +388,7 @@ public class Main {
         System.out.println("  export-html <file>    - write single HTML cross-reference report");
         System.out.println("  spring-beans          - list @Component/@Service/@RestController/… beans");
         System.out.println("  spring-wiring         - list DI edges (constructor / field / setter)");
+        System.out.println("  spring-controller-service-diagram - PlantUML + SVG (kroki) in cwd");
         System.out.println("  persist-spring-json <file> - save beans + wiring as JSON");
         System.out.println("  persist-spring-neo4j  - upsert graph (NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD, NEO4J_DATABASE)");
         System.out.println("  persist-spring-couchbase - upsert docs (COUCHBASE_* env vars)");
