@@ -40,4 +40,18 @@ public class ProjectModel {
         }
         return out;
     }
+
+    /** All types whose simple name matches (for import / field resolution). */
+    public List<TypeInfo> getTypesBySimpleName(String simpleName) {
+        List<TypeInfo> out = new ArrayList<>();
+        if (simpleName == null || simpleName.isEmpty()) {
+            return out;
+        }
+        for (TypeInfo t : typesByQualifiedName.values()) {
+            if (simpleName.equals(t.getSimpleName())) {
+                out.add(t);
+            }
+        }
+        return out;
+    }
 }

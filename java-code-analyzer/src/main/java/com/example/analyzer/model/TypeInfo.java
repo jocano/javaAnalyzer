@@ -2,7 +2,9 @@ package com.example.analyzer.model;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Metadata for a Java type (class, interface, enum) extracted from source.
@@ -19,7 +21,10 @@ public class TypeInfo {
     private String extendsType;
     private final List<String> implementsTypes = new ArrayList<>();
     private final List<String> fieldTypes = new ArrayList<>();
+    /** Field / component name → dependency simple type name (generics stripped). */
+    private final Map<String, String> fieldsByName = new LinkedHashMap<>();
     private final List<MethodInfo> publicMethods = new ArrayList<>();
+    private final List<MethodInfo> protectedMethods = new ArrayList<>();
     private String sourcePath;
     private int lineNumber;
 
@@ -44,7 +49,26 @@ public class TypeInfo {
 
     public List<String> getFieldTypes() { return fieldTypes; }
 
+    public Map<String, String> getFieldsByName() { return fieldsByName; }
+
     public List<MethodInfo> getPublicMethods() { return publicMethods; }
+
+    public List<MethodInfo> getProtectedMethods() { return protectedMethods; }
+
+    /** True if a public or protected method with this name exists (sequence tracing; private excluded). */
+    public boolean hasSequenceTraceableMethod(String methodName) {
+        for (MethodInfo m : publicMethods) {
+            if (methodName.equals(m.getName())) {
+                return true;
+            }
+        }
+        for (MethodInfo m : protectedMethods) {
+            if (methodName.equals(m.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public String getSourcePath() { return sourcePath; }
     public void setSourcePath(String sourcePath) { this.sourcePath = sourcePath; }

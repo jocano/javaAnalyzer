@@ -9,7 +9,10 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.body.RecordDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
+import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.Type;
 
@@ -89,20 +92,32 @@ public class JavaAnalyzer {
                 if (!typeName.equals("void") && !typeName.equals("int") && !typeName.equals("long")
                     && !typeName.equals("boolean") && !typeName.equals("double") && !typeName.equals("float")) {
                     info.getFieldTypes().add(typeName);
+                    for (VariableDeclarator v : fd.getVariables()) {
+                        info.getFieldsByName().put(v.getNameAsString(), typeName);
+                    }
+                }
+            }
+
+            if (typeDecl instanceof RecordDeclaration rd) {
+                for (Parameter p : rd.getParameters()) {
+                    Type rt = p.getType();
+                    String typeName = (rt instanceof ClassOrInterfaceType cit) ? cit.getNameAsString() : rt.toString();
+                    if (typeName == null || typeName.isEmpty()) continue;
+                    typeName = typeName.replaceAll("<.*>", "").trim();
+                    if (!typeName.equals("void") && !typeName.equals("int") && !typeName.equals("long")
+                        && !typeName.equals("boolean") && !typeName.equals("double") && !typeName.equals("float")) {
+                        info.getFieldsByName().put(p.getNameAsString(), typeName);
+                        info.getFieldTypes().add(typeName);
+                    }
                 }
             }
 
             for (MethodDeclaration md : typeDecl.getMethods()) {
-                if (!md.isPublic()) continue;
-                MethodInfo mi = new MethodInfo();
-                mi.setDeclaringTypeQualifiedName(info.getQualifiedName());
-                mi.setSourcePath(absolutePath);
-                md.getRange().ifPresent(r -> mi.setLineNumber(r.begin.line));
-                mi.setName(md.getNameAsString());
-                Type ret = md.getType();
-                mi.setReturnType(ret == null ? "void" : stripGenerics(ret.toString()));
-                md.getParameters().forEach(p -> mi.getParameterTypes().add(stripGenerics(p.getType().toString())));
-                info.getPublicMethods().add(mi);
+                if (md.isPublic()) {
+                    info.getPublicMethods().add(buildMethodInfo(info.getQualifiedName(), absolutePath, md));
+                } else if (md.isProtected()) {
+                    info.getProtectedMethods().add(buildMethodInfo(info.getQualifiedName(), absolutePath, md));
+                }
             }
 
             model.getTypesByQualifiedName().put(info.getQualifiedName(), info);
@@ -110,6 +125,18 @@ public class JavaAnalyzer {
             model.getPackages().computeIfAbsent(packageName, PackageInfo::new)
                 .getTypeQualifiedNames().add(info.getQualifiedName());
         }
+    }
+
+    private static MethodInfo buildMethodInfo(String declaringTypeFqn, String absolutePath, MethodDeclaration md) {
+        MethodInfo mi = new MethodInfo();
+        mi.setDeclaringTypeQualifiedName(declaringTypeFqn);
+        mi.setSourcePath(absolutePath);
+        md.getRange().ifPresent(r -> mi.setLineNumber(r.begin.line));
+        mi.setName(md.getNameAsString());
+        Type ret = md.getType();
+        mi.setReturnType(ret == null ? "void" : stripGenerics(ret.toString()));
+        md.getParameters().forEach(p -> mi.getParameterTypes().add(stripGenerics(p.getType().toString())));
+        return mi;
     }
 
     private static String toQualifiedName(ClassOrInterfaceType t) {

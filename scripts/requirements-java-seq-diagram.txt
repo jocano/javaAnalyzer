@@ -1,0 +1,3 @@
+# Optional but recommended for Java 17–accurate parsing in java-seq-diagram.py
+tree-sitter>=0.21
+tree-sitter-java>=0.23
