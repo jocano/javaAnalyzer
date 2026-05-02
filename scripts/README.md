@@ -180,6 +180,27 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 - Download and install Node.js from: https://nodejs.org/
 - Verify installation: `node --version`
 
+## IntelliJ `idea://` links (portable opener)
+
+`idea://open?file=...&line=...` only works if the OS (or a plugin) registered a handler for `idea://`. To get the **same behavior on every machine** without that registration, call the launcher explicitly:
+
+1. In IntelliJ: **Tools → Create Command-line Launcher…** and ensure `idea` is on your `PATH`.
+2. Run:
+
+```bash
+chmod +x scripts/idea-open-from-url.sh
+./scripts/idea-open-from-url.sh 'idea://open?file=/absolute/path/YourFile.java&line=26'
+```
+
+Optional: `export IDEA_BIN=/path/to/idea` if the launcher is not named `idea`.
+
+**Optional: make `idea://` open this script (macOS)**  
+Create an **Automator** “Application” with **Run Shell Script**, pass input as **arguments**, and run:
+
+`/path/to/scripts/idea-open-from-url.sh "$1"`
+
+Then use **RCDefaultApp** or similar to associate the `idea` URL scheme with that app (or open the Automator app from a bookmark). Details vary by macOS version.
+
 ## Security Notes
 
 - **Never commit tokens to version control**
