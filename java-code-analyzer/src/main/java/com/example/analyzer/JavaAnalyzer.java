@@ -5,6 +5,7 @@ import com.example.analyzer.model.PackageInfo;
 import com.example.analyzer.model.ProjectModel;
 import com.example.analyzer.model.TypeInfo;
 import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
@@ -33,6 +34,10 @@ public class JavaAnalyzer {
     };
 
     public static ProjectModel analyze(Path projectRoot, List<Path> javaFiles) {
+        // Ensure JavaParser is configured to the appropriate Java language level (Java 17)
+        ParserConfiguration parserConfig = new ParserConfiguration().setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
+        StaticJavaParser.setConfiguration(parserConfig);
+
         ProjectModel model = new ProjectModel();
         model.setProjectRoot(projectRoot.toAbsolutePath().toString());
         List<CompilationUnit> compilationUnits = new ArrayList<>();
@@ -107,7 +112,7 @@ public class JavaAnalyzer {
                     Type rt = p.getType();
                     String typeName = (rt instanceof ClassOrInterfaceType cit) ? cit.getNameWithScope() : rt.toString();
                     if (typeName == null || typeName.isEmpty()) continue;
-                    typeName = typeName.replaceAll("<.*>", "").trim();
+                    typeName = typeName.replaceAll("<[^>]*>", "").trim();
                     if (!typeName.equals("void") && !typeName.equals("int") && !typeName.equals("long")
                         && !typeName.equals("boolean") && !typeName.equals("double") && !typeName.equals("float")) {
                         info.getFieldsByName().put(p.getNameAsString(), typeName);

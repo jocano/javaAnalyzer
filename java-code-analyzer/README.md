@@ -11,6 +11,35 @@ cd java-code-analyzer
 mvn package
 ```
 
+## Web UI (new)
+
+You can keep the CLI and also run a web interface that executes the same command set on a single loaded model.
+
+Run:
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.main-class=com.example.analyzer.web.WebAnalyzerApplication \
+  -Dspring-boot.run.arguments="--analyzer.model.path=/absolute/path/to/snapshot.json"
+```
+
+Alternative (JVM system property for the app process):
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.main-class=com.example.analyzer.web.WebAnalyzerApplication \
+  -Dspring-boot.run.jvmArguments="-Danalyzer.model.path=/absolute/path/to/snapshot.json"
+```
+
+Then open [http://localhost:8080](http://localhost:8080).
+
+- Backend API:
+  - `GET /api/commands` - list available commands
+  - `POST /api/execute` with body `{"command":"package-dependencies-diagram"}` - execute command and return output + generated SVG (if any)
+- Model loading for web runtime:
+  - `--analyzer.model.path=...` (Spring arg; preferred with `spring-boot:run`), or
+  - `-Danalyzer.model.path=...` (JVM property), or
+  - `JAVA_CODE_ANALYZER_MODEL=...`
+  - fallback scan root: `-Danalyzer.project.root=...` (or current directory)
+
 Run with:
 
 ```bash

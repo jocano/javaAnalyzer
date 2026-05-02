@@ -1,0 +1,2307 @@
+{
+  "formatVersion" : 1,
+  "savedAtMillis" : 1777758696452,
+  "projectRoot" : "/Users/jcano/IdeaProjects/brewery",
+  "types" : [ {
+    "packageName" : "",
+    "simpleName" : "MavenWrapperDownloader",
+    "qualifiedName" : "MavenWrapperDownloader",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String", "String", "String", "String", "String" ],
+    "fieldsByName" : {
+      "WRAPPER_VERSION" : "String",
+      "DEFAULT_DOWNLOAD_URL" : "String",
+      "MAVEN_WRAPPER_PROPERTIES_PATH" : "String",
+      "MAVEN_WRAPPER_JAR_PATH" : "String",
+      "PROPERTY_NAME_WRAPPER_URL" : "String"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "MavenWrapperDownloader",
+      "name" : "main",
+      "returnType" : "void",
+      "parameterTypes" : [ "String[]" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/.mvn/wrapper/MavenWrapperDownloader.java",
+      "lineNumber" : 49
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/.mvn/wrapper/MavenWrapperDownloader.java",
+    "lineNumber" : 22
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery",
+    "simpleName" : "BrewingApplication",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.BrewingApplication",
+    "kind" : "CLASS",
+    "annotations" : [ "SpringBootApplication", "EnableFeignClients", "Import" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.BrewingApplication",
+      "name" : "main",
+      "returnType" : "void",
+      "parameterTypes" : [ "String[]" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/BrewingApplication.java",
+      "lineNumber" : 14
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/BrewingApplication.java",
+    "lineNumber" : 9
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.acceptance",
+    "simpleName" : "ObservabilityBreweryAcceptanceTests",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.acceptance.ObservabilityBreweryAcceptanceTests",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : "AbstractBreweryAcceptance",
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.acceptance.ObservabilityBreweryAcceptanceTests",
+      "name" : "should_successfully_pass_Trace_Id_via_rest_template",
+      "returnType" : "void",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/ObservabilityBreweryAcceptanceTests.java",
+      "lineNumber" : 12
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.acceptance.ObservabilityBreweryAcceptanceTests",
+      "name" : "should_successfully_pass_Trace_Id_via_feign",
+      "returnType" : "void",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/ObservabilityBreweryAcceptanceTests.java",
+      "lineNumber" : 18
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/ObservabilityBreweryAcceptanceTests.java",
+    "lineNumber" : 10
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.acceptance",
+    "simpleName" : "ServiceDiscoveryAcceptanceTests",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.acceptance.ServiceDiscoveryAcceptanceTests",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : "AbstractBreweryAcceptance",
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.acceptance.ServiceDiscoveryAcceptanceTests",
+      "name" : "before",
+      "returnType" : "void",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/ServiceDiscoveryAcceptanceTests.java",
+      "lineNumber" : 15
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.acceptance.ServiceDiscoveryAcceptanceTests",
+      "name" : "should_successfully_brew_the_beer_via_rest_template_and_service_discovery",
+      "returnType" : "void",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/ServiceDiscoveryAcceptanceTests.java",
+      "lineNumber" : 20
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.acceptance.ServiceDiscoveryAcceptanceTests",
+      "name" : "should_successfully_brew_the_beer_via_feign_and_service_discovery",
+      "returnType" : "void",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/ServiceDiscoveryAcceptanceTests.java",
+      "lineNumber" : 31
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/ServiceDiscoveryAcceptanceTests.java",
+    "lineNumber" : 13
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.acceptance",
+    "simpleName" : "SystemPropertyValidityTests",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.acceptance.SystemPropertyValidityTests",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.acceptance.SystemPropertyValidityTests",
+      "name" : "will_fail_if_WHAT_TO_TEST_system_property_has_not_been_passed_or_is_invalid",
+      "returnType" : "void",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/SystemPropertyValidityTests.java",
+      "lineNumber" : 11
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/SystemPropertyValidityTests.java",
+    "lineNumber" : 10
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.acceptance.common",
+    "simpleName" : "SpanUtil",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.acceptance.common.SpanUtil",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "char[]" ],
+    "fieldsByName" : {
+      "HEX_DIGITS" : "char[]"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.acceptance.common.SpanUtil",
+      "name" : "generateReferenceProcessId",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/common/SpanUtil.java",
+      "lineNumber" : 11
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.acceptance.common.SpanUtil",
+      "name" : "idToHex",
+      "returnType" : "String",
+      "parameterTypes" : [ "long" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/common/SpanUtil.java",
+      "lineNumber" : 18
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/common/SpanUtil.java",
+    "lineNumber" : 9
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.acceptance.common",
+    "simpleName" : "WhatToTest",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.acceptance.common.WhatToTest",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String" ],
+    "fieldsByName" : {
+      "WHAT_TO_TEST_SYSTEM_PROP" : "String"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/acceptance-tests/src/test/groovy/io/spring/cloud/samples/brewery/acceptance/common/WhatToTest.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.aggregating",
+    "simpleName" : "AggregationConfiguration",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.AggregationConfiguration",
+    "kind" : "CLASS",
+    "annotations" : [ "Configuration", "Import", "EnableConfigurationProperties" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/AggregationConfiguration.java",
+    "lineNumber" : 14
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.aggregating",
+    "simpleName" : "Collaborators",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.Collaborators",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String" ],
+    "fieldsByName" : {
+      "PROXY" : "String"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/Collaborators.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.aggregating",
+    "simpleName" : "IngredientWarehouse",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientWarehouse",
+    "kind" : "CLASS",
+    "annotations" : [ "Service" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Map" ],
+    "fieldsByName" : {
+      "DATABASE" : "Map"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientWarehouse",
+      "name" : "addIngredient",
+      "returnType" : "void",
+      "parameterTypes" : [ "Ingredient" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientWarehouse.java",
+      "lineNumber" : 17
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientWarehouse",
+      "name" : "useIngredients",
+      "returnType" : "void",
+      "parameterTypes" : [ "Integer" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientWarehouse.java",
+      "lineNumber" : 22
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientWarehouse",
+      "name" : "getCurrentState",
+      "returnType" : "Ingredients",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientWarehouse.java",
+      "lineNumber" : 26
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientWarehouse.java",
+    "lineNumber" : 12
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.aggregating",
+    "simpleName" : "IngredientsAggregator",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsAggregator",
+    "kind" : "CLASS",
+    "annotations" : [ "Component" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "MaturingServiceUpdater", "IngredientWarehouse", "IngredientsCollector", "EventGateway" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "maturingUpdater" : "MaturingServiceUpdater",
+      "ingredientWarehouse" : "IngredientWarehouse",
+      "ingredientsCollector" : "IngredientsCollector",
+      "eventGateway" : "EventGateway"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsAggregator",
+      "name" : "fetchIngredients",
+      "returnType" : "Ingredients",
+      "parameterTypes" : [ "Order", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsAggregator.java",
+      "lineNumber" : 38
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsAggregator.java",
+    "lineNumber" : 18
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.aggregating",
+    "simpleName" : "IngredientsCollector",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsCollector",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "RestTemplate", "IngredientsProxy", "BaggageManager" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "restTemplate" : "RestTemplate",
+      "ingredientsProxy" : "IngredientsProxy",
+      "baggageManager" : "BaggageManager"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsCollector.java",
+    "lineNumber" : 19
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.aggregating",
+    "simpleName" : "IngredientsController",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsController",
+    "kind" : "CLASS",
+    "annotations" : [ "RestController", "RequestMapping" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "IngredientsAggregator", "ObservationRegistry" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "ingredientsAggregator" : "IngredientsAggregator",
+      "observationRegistry" : "ObservationRegistry"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsController",
+      "name" : "distributeIngredients",
+      "returnType" : "Callable",
+      "parameterTypes" : [ "Order", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsController.java",
+      "lineNumber" : 32
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsController.java",
+    "lineNumber" : 15
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.aggregating",
+    "simpleName" : "IngredientsProperties",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsProperties",
+    "kind" : "CLASS",
+    "annotations" : [ "ConfigurationProperties" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Integer" ],
+    "fieldsByName" : {
+      "threshold" : "Integer"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsProperties",
+      "name" : "getThreshold",
+      "returnType" : "Integer",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsProperties.java",
+      "lineNumber" : 13
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsProperties",
+      "name" : "setThreshold",
+      "returnType" : "void",
+      "parameterTypes" : [ "Integer" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsProperties.java",
+      "lineNumber" : 17
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsProperties",
+      "name" : "equals",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsProperties.java",
+      "lineNumber" : 21
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsProperties",
+      "name" : "hashCode",
+      "returnType" : "int",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsProperties.java",
+      "lineNumber" : 36
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsProperties",
+      "name" : "toString",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsProperties.java",
+      "lineNumber" : 44
+    } ],
+    "protectedMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsProperties",
+      "name" : "canEqual",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsProperties.java",
+      "lineNumber" : 32
+    } ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsProperties.java",
+    "lineNumber" : 5
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.aggregating",
+    "simpleName" : "IngredientsProxy",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsProxy",
+    "kind" : "INTERFACE",
+    "annotations" : [ "FeignClient" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsProxy",
+      "name" : "ingredients",
+      "returnType" : "Ingredient",
+      "parameterTypes" : [ "IngredientType", "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsProxy.java",
+      "lineNumber" : 14
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsProxy",
+      "name" : "nonExistentIngredients",
+      "returnType" : "Ingredient",
+      "parameterTypes" : [ "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsProxy.java",
+      "lineNumber" : 19
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsProxy.java",
+    "lineNumber" : 11
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.aggregating",
+    "simpleName" : "MaturingServiceUpdater",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.MaturingServiceUpdater",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "IngredientsProperties", "IngredientWarehouse", "MaturingService", "EventGateway" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "ingredientsProperties" : "IngredientsProperties",
+      "ingredientWarehouse" : "IngredientWarehouse",
+      "maturingService" : "MaturingService",
+      "eventGateway" : "EventGateway"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.MaturingServiceUpdater",
+      "name" : "updateIfLimitReached",
+      "returnType" : "Ingredients",
+      "parameterTypes" : [ "Ingredients", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/MaturingServiceUpdater.java",
+      "lineNumber" : 28
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/MaturingServiceUpdater.java",
+    "lineNumber" : 11
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.bottling",
+    "simpleName" : "Bottler",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.bottling.Bottler",
+    "kind" : "CLASS",
+    "annotations" : [ "Service" ],
+    "extendsType" : null,
+    "implementsTypes" : [ "BottlingService" ],
+    "fieldTypes" : [ "Logger", "BottlerService", "CircuitBreakerFactory" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "bottlerService" : "BottlerService",
+      "circuitBreakerFactory" : "CircuitBreakerFactory"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.bottling.Bottler",
+      "name" : "bottle",
+      "returnType" : "void",
+      "parameterTypes" : [ "Wort", "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/Bottler.java",
+      "lineNumber" : 24
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/Bottler.java",
+    "lineNumber" : 9
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.bottling",
+    "simpleName" : "BottlerService",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.bottling.BottlerService",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "BottlingWorker", "PresentingClient", "RestTemplate", "ObservationRegistry", "CircuitBreakerFactory", "BaggageManager" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "bottlingWorker" : "BottlingWorker",
+      "presentingClient" : "PresentingClient",
+      "restTemplate" : "RestTemplate",
+      "observationRegistry" : "ObservationRegistry",
+      "factory" : "CircuitBreakerFactory",
+      "baggageManager" : "BaggageManager"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/BottlerService.java",
+    "lineNumber" : 20
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.bottling",
+    "simpleName" : "BottlingConfiguration",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.bottling.BottlingConfiguration",
+    "kind" : "CLASS",
+    "annotations" : [ "Configuration", "Import" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/BottlingConfiguration.java",
+    "lineNumber" : 25
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.bottling",
+    "simpleName" : "BottlingWorker",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.bottling.BottlingWorker",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "Map", "ObservationRegistry", "PresentingClient", "RestTemplate", "EventGateway", "BaggageManager" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "PROCESS_STATE" : "Map",
+      "observationRegistry" : "ObservationRegistry",
+      "presentingClient" : "PresentingClient",
+      "restTemplate" : "RestTemplate",
+      "eventGateway" : "EventGateway",
+      "baggageManager" : "BaggageManager"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.bottling.BottlingWorker",
+      "name" : "bottleBeer",
+      "returnType" : "void",
+      "parameterTypes" : [ "Integer", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/BottlingWorker.java",
+      "lineNumber" : 45
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/BottlingWorker.java",
+    "lineNumber" : 22
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.bottling",
+    "simpleName" : "Collaborators",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.bottling.Collaborators",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String" ],
+    "fieldsByName" : {
+      "PRESENTING" : "String"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/Collaborators.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.bottling",
+    "simpleName" : "PresentingClient",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.bottling.PresentingClient",
+    "kind" : "INTERFACE",
+    "annotations" : [ "FeignClient" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.bottling.PresentingClient",
+      "name" : "updateBottles",
+      "returnType" : "String",
+      "parameterTypes" : [ "int", "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/PresentingClient.java",
+      "lineNumber" : 13
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.bottling.PresentingClient",
+      "name" : "bottlingFeed",
+      "returnType" : "void",
+      "parameterTypes" : [ "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/PresentingClient.java",
+      "lineNumber" : 22
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/PresentingClient.java",
+    "lineNumber" : 11
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common",
+    "simpleName" : "BottlingService",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.BottlingService",
+    "kind" : "INTERFACE",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.BottlingService",
+      "name" : "bottle",
+      "returnType" : "void",
+      "parameterTypes" : [ "Wort", "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/common/BottlingService.java",
+      "lineNumber" : 6
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/common/BottlingService.java",
+    "lineNumber" : 5
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common",
+    "simpleName" : "CommonConfiguration",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.CommonConfiguration",
+    "kind" : "CLASS",
+    "annotations" : [ "Configuration" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/common/CommonConfiguration.java",
+    "lineNumber" : 19
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common",
+    "simpleName" : "MaturingService",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.MaturingService",
+    "kind" : "INTERFACE",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.MaturingService",
+      "name" : "distributeIngredients",
+      "returnType" : "void",
+      "parameterTypes" : [ "Ingredients", "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/common/MaturingService.java",
+      "lineNumber" : 6
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/common/MaturingService.java",
+    "lineNumber" : 5
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common",
+    "simpleName" : "TestCommunication",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.TestCommunication",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.TestCommunication",
+      "name" : "fromBaggage",
+      "returnType" : "String",
+      "parameterTypes" : [ "BaggageManager" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestCommunication.java",
+      "lineNumber" : 9
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestCommunication.java",
+    "lineNumber" : 7
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common",
+    "simpleName" : "TestConfiguration",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.TestConfiguration",
+    "kind" : "CLASS",
+    "annotations" : [ "Configuration", "ComponentScan", "IntegrationComponentScan" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestConfiguration.java",
+    "lineNumber" : 20
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common",
+    "simpleName" : "TestRequestEntityBuilder",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.TestRequestEntityBuilder",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String", "String", "String", "String", "String", "String", "HttpMethod", "Object" ],
+    "fieldsByName" : {
+      "PROCESS_ID_HEADER" : "String",
+      "CONTENT_TYPE_HEADER" : "String",
+      "processId" : "String",
+      "serviceName" : "String",
+      "url" : "String",
+      "version" : "String",
+      "httpMethod" : "HttpMethod",
+      "body" : "Object"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.TestRequestEntityBuilder",
+      "name" : "requestEntity",
+      "returnType" : "TestRequestEntityBuilder",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestRequestEntityBuilder.java",
+      "lineNumber" : 20
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.TestRequestEntityBuilder",
+      "name" : "processId",
+      "returnType" : "TestRequestEntityBuilder",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestRequestEntityBuilder.java",
+      "lineNumber" : 24
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.TestRequestEntityBuilder",
+      "name" : "serviceName",
+      "returnType" : "TestRequestEntityBuilder",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestRequestEntityBuilder.java",
+      "lineNumber" : 29
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.TestRequestEntityBuilder",
+      "name" : "url",
+      "returnType" : "TestRequestEntityBuilder",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestRequestEntityBuilder.java",
+      "lineNumber" : 34
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.TestRequestEntityBuilder",
+      "name" : "contentTypeVersion",
+      "returnType" : "TestRequestEntityBuilder",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestRequestEntityBuilder.java",
+      "lineNumber" : 39
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.TestRequestEntityBuilder",
+      "name" : "httpMethod",
+      "returnType" : "TestRequestEntityBuilder",
+      "parameterTypes" : [ "HttpMethod" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestRequestEntityBuilder.java",
+      "lineNumber" : 44
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.TestRequestEntityBuilder",
+      "name" : "body",
+      "returnType" : "TestRequestEntityBuilder",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestRequestEntityBuilder.java",
+      "lineNumber" : 49
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.TestRequestEntityBuilder",
+      "name" : "build",
+      "returnType" : "RequestEntity",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestRequestEntityBuilder.java",
+      "lineNumber" : 54
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestRequestEntityBuilder.java",
+    "lineNumber" : 9
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common.events",
+    "simpleName" : "Event",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ "Serializable" ],
+    "fieldTypes" : [ "String", "EventType", "LocalDateTime" ],
+    "fieldsByName" : {
+      "processId" : "String",
+      "eventType" : "EventType",
+      "eventTime" : "LocalDateTime"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+      "name" : "builder",
+      "returnType" : "EventBuilder",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+      "lineNumber" : 19
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+      "name" : "getProcessId",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+      "lineNumber" : 23
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+      "name" : "getEventType",
+      "returnType" : "EventType",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+      "lineNumber" : 27
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+      "name" : "getEventTime",
+      "returnType" : "LocalDateTime",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+      "lineNumber" : 31
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+      "name" : "setProcessId",
+      "returnType" : "void",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+      "lineNumber" : 35
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+      "name" : "setEventType",
+      "returnType" : "void",
+      "parameterTypes" : [ "EventType" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+      "lineNumber" : 39
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+      "name" : "setEventTime",
+      "returnType" : "void",
+      "parameterTypes" : [ "LocalDateTime" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+      "lineNumber" : 43
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+      "name" : "equals",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+      "lineNumber" : 47
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+      "name" : "hashCode",
+      "returnType" : "int",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+      "lineNumber" : 68
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+      "name" : "toString",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+      "lineNumber" : 80
+    } ],
+    "protectedMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.Event",
+      "name" : "canEqual",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+      "lineNumber" : 64
+    } ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/Event.java",
+    "lineNumber" : 6
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common.events",
+    "simpleName" : "EventGateway",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.events.EventGateway",
+    "kind" : "CLASS",
+    "annotations" : [ "Component" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "ObjectProvider" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "streamBridge" : "ObjectProvider"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.events.EventGateway",
+      "name" : "emitEvent",
+      "returnType" : "void",
+      "parameterTypes" : [ "Event" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/EventGateway.java",
+      "lineNumber" : 21
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/EventGateway.java",
+    "lineNumber" : 10
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common.events",
+    "simpleName" : "EventType",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.events.EventType",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/EventType.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common.model",
+    "simpleName" : "Ingredient",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.model.Ingredient",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "IngredientType", "Integer" ],
+    "fieldsByName" : {
+      "type" : "IngredientType",
+      "quantity" : "Integer"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Ingredient",
+      "name" : "getType",
+      "returnType" : "IngredientType",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Ingredient.java",
+      "lineNumber" : 15
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Ingredient",
+      "name" : "getQuantity",
+      "returnType" : "Integer",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Ingredient.java",
+      "lineNumber" : 19
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Ingredient",
+      "name" : "setType",
+      "returnType" : "void",
+      "parameterTypes" : [ "IngredientType" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Ingredient.java",
+      "lineNumber" : 23
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Ingredient",
+      "name" : "setQuantity",
+      "returnType" : "void",
+      "parameterTypes" : [ "Integer" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Ingredient.java",
+      "lineNumber" : 27
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Ingredient",
+      "name" : "equals",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Ingredient.java",
+      "lineNumber" : 31
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Ingredient",
+      "name" : "hashCode",
+      "returnType" : "int",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Ingredient.java",
+      "lineNumber" : 49
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Ingredient",
+      "name" : "toString",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Ingredient.java",
+      "lineNumber" : 59
+    } ],
+    "protectedMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Ingredient",
+      "name" : "canEqual",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Ingredient.java",
+      "lineNumber" : 45
+    } ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Ingredient.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common.model",
+    "simpleName" : "IngredientType",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.model.IngredientType",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/IngredientType.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common.model",
+    "simpleName" : "Ingredients",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.model.Ingredients",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "List" ],
+    "fieldsByName" : {
+      "ingredients" : "List"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Ingredients",
+      "name" : "toString",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Ingredients.java",
+      "lineNumber" : 18
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Ingredients.java",
+    "lineNumber" : 6
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common.model",
+    "simpleName" : "Order",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.model.Order",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "List" ],
+    "fieldsByName" : {
+      "items" : "List"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Order",
+      "name" : "getItems",
+      "returnType" : "List",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Order.java",
+      "lineNumber" : 12
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Order",
+      "name" : "setItems",
+      "returnType" : "void",
+      "parameterTypes" : [ "List" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Order.java",
+      "lineNumber" : 16
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Order",
+      "name" : "equals",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Order.java",
+      "lineNumber" : 20
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Order",
+      "name" : "hashCode",
+      "returnType" : "int",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Order.java",
+      "lineNumber" : 35
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Order",
+      "name" : "toString",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Order.java",
+      "lineNumber" : 43
+    } ],
+    "protectedMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Order",
+      "name" : "canEqual",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Order.java",
+      "lineNumber" : 31
+    } ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Order.java",
+    "lineNumber" : 6
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common.model",
+    "simpleName" : "Version",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.model.Version",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String", "String" ],
+    "fieldsByName" : {
+      "BREWING_V1" : "String",
+      "PRESENTING_V1" : "String"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Version.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.common.model",
+    "simpleName" : "Wort",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.common.model.Wort",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Wort",
+      "name" : "getWort",
+      "returnType" : "int",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Wort.java",
+      "lineNumber" : 10
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Wort",
+      "name" : "setWort",
+      "returnType" : "void",
+      "parameterTypes" : [ "int" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Wort.java",
+      "lineNumber" : 14
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Wort",
+      "name" : "equals",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Wort.java",
+      "lineNumber" : 18
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Wort",
+      "name" : "hashCode",
+      "returnType" : "int",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Wort.java",
+      "lineNumber" : 31
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Wort",
+      "name" : "toString",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Wort.java",
+      "lineNumber" : 38
+    } ],
+    "protectedMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.common.model.Wort",
+      "name" : "canEqual",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Wort.java",
+      "lineNumber" : 27
+    } ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/model/Wort.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.configserver",
+    "simpleName" : "ConfigServerApplication",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.configserver.ConfigServerApplication",
+    "kind" : "CLASS",
+    "annotations" : [ "SpringBootApplication", "EnableConfigServer" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.configserver.ConfigServerApplication",
+      "name" : "main",
+      "returnType" : "void",
+      "parameterTypes" : [ "String[]" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/config-server/src/main/java/io/spring/cloud/samples/brewery/configserver/ConfigServerApplication.java",
+      "lineNumber" : 10
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/config-server/src/main/java/io/spring/cloud/samples/brewery/configserver/ConfigServerApplication.java",
+    "lineNumber" : 7
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.eureka",
+    "simpleName" : "EurekaApplication",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.eureka.EurekaApplication",
+    "kind" : "CLASS",
+    "annotations" : [ "SpringBootApplication", "Configuration", "EnableEurekaServer" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.eureka.EurekaApplication",
+      "name" : "main",
+      "returnType" : "void",
+      "parameterTypes" : [ "String[]" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/eureka/src/main/java/io/spring/cloud/samples/brewery/eureka/EurekaApplication.java",
+      "lineNumber" : 12
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/eureka/src/main/java/io/spring/cloud/samples/brewery/eureka/EurekaApplication.java",
+    "lineNumber" : 8
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.gateway",
+    "simpleName" : "GatewayApplication",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.gateway.GatewayApplication",
+    "kind" : "CLASS",
+    "annotations" : [ "SpringBootApplication", "Import" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.gateway.GatewayApplication",
+      "name" : "main",
+      "returnType" : "void",
+      "parameterTypes" : [ "String[]" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/gateway/src/main/java/io/spring/cloud/samples/brewery/gateway/GatewayApplication.java",
+      "lineNumber" : 15
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/gateway/src/main/java/io/spring/cloud/samples/brewery/gateway/GatewayApplication.java",
+    "lineNumber" : 11
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.ingredients",
+    "simpleName" : "IngredientsApplication",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsApplication",
+    "kind" : "CLASS",
+    "annotations" : [ "SpringBootApplication", "Import" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsApplication",
+      "name" : "main",
+      "returnType" : "void",
+      "parameterTypes" : [ "String[]" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/IngredientsApplication.java",
+      "lineNumber" : 12
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/IngredientsApplication.java",
+    "lineNumber" : 8
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.ingredients",
+    "simpleName" : "IngredientsConfiguration",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsConfiguration",
+    "kind" : "CLASS",
+    "annotations" : [ "Configuration", "EnableConfigurationProperties" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/IngredientsConfiguration.java",
+    "lineNumber" : 10
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.ingredients",
+    "simpleName" : "IngredientsFeignController",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsFeignController",
+    "kind" : "CLASS",
+    "annotations" : [ "RestController", "RequestMapping" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "StubbedIngredientsProperties" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "stubbedIngredientsProperties" : "StubbedIngredientsProperties"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsFeignController",
+      "name" : "ingredients",
+      "returnType" : "Ingredient",
+      "parameterTypes" : [ "IngredientType", "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/IngredientsFeignController.java",
+      "lineNumber" : 25
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsFeignController",
+      "name" : "nonExistentIngredients",
+      "returnType" : "Ingredient",
+      "parameterTypes" : [ "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/IngredientsFeignController.java",
+      "lineNumber" : 35
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/IngredientsFeignController.java",
+    "lineNumber" : 13
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.ingredients",
+    "simpleName" : "IngredientsFetchController",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsFetchController",
+    "kind" : "CLASS",
+    "annotations" : [ "RestController" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "StubbedIngredientsProperties", "ObservationRegistry", "BottlerServiceX" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "stubbedIngredientsProperties" : "StubbedIngredientsProperties",
+      "observationRegistry" : "ObservationRegistry",
+      "bottler" : "BottlerServiceX"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsFetchController",
+      "name" : "ingredients",
+      "returnType" : "Mono",
+      "parameterTypes" : [ "IngredientType", "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/IngredientsFetchController.java",
+      "lineNumber" : 28
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/IngredientsFetchController.java",
+    "lineNumber" : 13
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.ingredients",
+    "simpleName" : "StubbedIngredientsProperties",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.StubbedIngredientsProperties",
+    "kind" : "CLASS",
+    "annotations" : [ "ConfigurationProperties" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Integer" ],
+    "fieldsByName" : {
+      "returnedIngredientsQuantity" : "Integer"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.StubbedIngredientsProperties",
+      "name" : "getReturnedIngredientsQuantity",
+      "returnType" : "Integer",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/StubbedIngredientsProperties.java",
+      "lineNumber" : 19
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.StubbedIngredientsProperties",
+      "name" : "setReturnedIngredientsQuantity",
+      "returnType" : "void",
+      "parameterTypes" : [ "Integer" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/StubbedIngredientsProperties.java",
+      "lineNumber" : 23
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.StubbedIngredientsProperties",
+      "name" : "equals",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/StubbedIngredientsProperties.java",
+      "lineNumber" : 27
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.StubbedIngredientsProperties",
+      "name" : "hashCode",
+      "returnType" : "int",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/StubbedIngredientsProperties.java",
+      "lineNumber" : 43
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.StubbedIngredientsProperties",
+      "name" : "toString",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/StubbedIngredientsProperties.java",
+      "lineNumber" : 51
+    } ],
+    "protectedMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.StubbedIngredientsProperties",
+      "name" : "canEqual",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/StubbedIngredientsProperties.java",
+      "lineNumber" : 39
+    } ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/StubbedIngredientsProperties.java",
+    "lineNumber" : 5
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.ingredients.controllers",
+    "simpleName" : "MyController",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.controllers.MyController",
+    "kind" : "CLASS",
+    "annotations" : [ "Controller" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "BottlerServiceX" ],
+    "fieldsByName" : {
+      "bottlerServiceX" : "BottlerServiceX"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/controllers/MyController.java",
+    "lineNumber" : 6
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.ingredients.services",
+    "simpleName" : "BottlerServiceX",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.services.BottlerServiceX",
+    "kind" : "CLASS",
+    "annotations" : [ "Service" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/services/BottlerServiceX.java",
+    "lineNumber" : 5
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.maturing",
+    "simpleName" : "BottlingServiceUpdater",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.maturing.BottlingServiceUpdater",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "BrewProperties", "ObservationRegistry", "PresentingServiceClient", "BottlingService", "RestTemplate", "EventGateway", "CircuitBreakerFactory", "BaggageManager" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "brewProperties" : "BrewProperties",
+      "observationRegistry" : "ObservationRegistry",
+      "presentingServiceClient" : "PresentingServiceClient",
+      "bottlingService" : "BottlingService",
+      "restTemplate" : "RestTemplate",
+      "eventGateway" : "EventGateway",
+      "circuitBreakerFactory" : "CircuitBreakerFactory",
+      "baggageManager" : "BaggageManager"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.maturing.BottlingServiceUpdater",
+      "name" : "updateBottlingServiceAboutBrewedBeer",
+      "returnType" : "void",
+      "parameterTypes" : [ "Ingredients", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BottlingServiceUpdater.java",
+      "lineNumber" : 52
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.maturing.BottlingServiceUpdater",
+      "name" : "notifyBottlingService",
+      "returnType" : "void",
+      "parameterTypes" : [ "Ingredients", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BottlingServiceUpdater.java",
+      "lineNumber" : 93
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BottlingServiceUpdater.java",
+    "lineNumber" : 24
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.maturing",
+    "simpleName" : "BrewConfiguration",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.maturing.BrewConfiguration",
+    "kind" : "CLASS",
+    "annotations" : [ "Configuration", "Import", "EnableConfigurationProperties" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BrewConfiguration.java",
+    "lineNumber" : 16
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.maturing",
+    "simpleName" : "BrewProperties",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.maturing.BrewProperties",
+    "kind" : "CLASS",
+    "annotations" : [ "ConfigurationProperties" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Long" ],
+    "fieldsByName" : {
+      "timeout" : "Long"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.maturing.BrewProperties",
+      "name" : "getTimeout",
+      "returnType" : "Long",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BrewProperties.java",
+      "lineNumber" : 13
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.maturing.BrewProperties",
+      "name" : "setTimeout",
+      "returnType" : "void",
+      "parameterTypes" : [ "Long" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BrewProperties.java",
+      "lineNumber" : 17
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.maturing.BrewProperties",
+      "name" : "equals",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BrewProperties.java",
+      "lineNumber" : 21
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.maturing.BrewProperties",
+      "name" : "hashCode",
+      "returnType" : "int",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BrewProperties.java",
+      "lineNumber" : 36
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.maturing.BrewProperties",
+      "name" : "toString",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BrewProperties.java",
+      "lineNumber" : 44
+    } ],
+    "protectedMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.maturing.BrewProperties",
+      "name" : "canEqual",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BrewProperties.java",
+      "lineNumber" : 32
+    } ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BrewProperties.java",
+    "lineNumber" : 5
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.maturing",
+    "simpleName" : "Collaborators",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.maturing.Collaborators",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String", "String" ],
+    "fieldsByName" : {
+      "BOTTLING" : "String",
+      "PRESENTING" : "String"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/Collaborators.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.maturing",
+    "simpleName" : "Maturer",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.maturing.Maturer",
+    "kind" : "CLASS",
+    "annotations" : [ "Service" ],
+    "extendsType" : null,
+    "implementsTypes" : [ "MaturingService" ],
+    "fieldTypes" : [ "Logger", "BottlingServiceUpdater" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "bottlingServiceUpdater" : "BottlingServiceUpdater"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.maturing.Maturer",
+      "name" : "distributeIngredients",
+      "returnType" : "void",
+      "parameterTypes" : [ "Ingredients", "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/Maturer.java",
+      "lineNumber" : 18
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/Maturer.java",
+    "lineNumber" : 8
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.maturing",
+    "simpleName" : "PresentingServiceClient",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.maturing.PresentingServiceClient",
+    "kind" : "INTERFACE",
+    "annotations" : [ "FeignClient" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.maturing.PresentingServiceClient",
+      "name" : "maturingFeed",
+      "returnType" : "String",
+      "parameterTypes" : [ "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/PresentingServiceClient.java",
+      "lineNumber" : 12
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/PresentingServiceClient.java",
+    "lineNumber" : 10
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.presenting",
+    "simpleName" : "PresentingApplication",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.PresentingApplication",
+    "kind" : "CLASS",
+    "annotations" : [ "SpringBootApplication", "EnableAsync", "EnableFeignClients", "Import" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.PresentingApplication",
+      "name" : "loadBalancedRestTemplate",
+      "returnType" : "RestTemplate",
+      "parameterTypes" : [ "RestTemplateBuilder" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/PresentingApplication.java",
+      "lineNumber" : 20
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.PresentingApplication",
+      "name" : "main",
+      "returnType" : "void",
+      "parameterTypes" : [ "String[]" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/PresentingApplication.java",
+      "lineNumber" : 26
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/PresentingApplication.java",
+    "lineNumber" : 14
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.presenting.config",
+    "simpleName" : "Collaborators",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.config.Collaborators",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String" ],
+    "fieldsByName" : {
+      "BREWING" : "String"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/config/Collaborators.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.presenting.config",
+    "simpleName" : "Versions",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.config.Versions",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String", "String" ],
+    "fieldsByName" : {
+      "PRESENTING_JSON_VERSION_1" : "String",
+      "BREWING_CONTENT_TYPE_V1" : "String"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/config/Versions.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.presenting.feed",
+    "simpleName" : "FeedController",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedController",
+    "kind" : "CLASS",
+    "annotations" : [ "RestController", "RequestMapping" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "FeedRepository", "ObservationRegistry" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "feedRepository" : "FeedRepository",
+      "observationRegistry" : "ObservationRegistry"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedController",
+      "name" : "maturing",
+      "returnType" : "void",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedController.java",
+      "lineNumber" : 36
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedController",
+      "name" : "bottling",
+      "returnType" : "void",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedController.java",
+      "lineNumber" : 47
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedController",
+      "name" : "bottles",
+      "returnType" : "void",
+      "parameterTypes" : [ "Integer", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedController.java",
+      "lineNumber" : 58
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedController",
+      "name" : "process",
+      "returnType" : "ResponseEntity",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedController.java",
+      "lineNumber" : 68
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedController",
+      "name" : "allProcesses",
+      "returnType" : "ResponseEntity>",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedController.java",
+      "lineNumber" : 76
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedController",
+      "name" : "show",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedController.java",
+      "lineNumber" : 84
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedController.java",
+    "lineNumber" : 23
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.presenting.feed",
+    "simpleName" : "FeedRepository",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository",
+    "kind" : "CLASS",
+    "annotations" : [ "Component" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Logger", "Set", "AtomicInteger" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "processes" : "Set",
+      "bottles" : "AtomicInteger"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository",
+      "name" : "addModifyProcess",
+      "returnType" : "void",
+      "parameterTypes" : [ "String", "ProcessState" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedRepository.java",
+      "lineNumber" : 24
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository",
+      "name" : "setBottles",
+      "returnType" : "void",
+      "parameterTypes" : [ "String", "Integer" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedRepository.java",
+      "lineNumber" : 38
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository",
+      "name" : "showStatuses",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedRepository.java",
+      "lineNumber" : 43
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository",
+      "name" : "countFor",
+      "returnType" : "Long",
+      "parameterTypes" : [ "ProcessState" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedRepository.java",
+      "lineNumber" : 48
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository",
+      "name" : "getProcessStateForId",
+      "returnType" : "ResponseEntity",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedRepository.java",
+      "lineNumber" : 54
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository",
+      "name" : "getBottles",
+      "returnType" : "Integer",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedRepository.java",
+      "lineNumber" : 64
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository",
+      "name" : "getProcesses",
+      "returnType" : "Set",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedRepository.java",
+      "lineNumber" : 68
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedRepository.java",
+    "lineNumber" : 17
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.presenting.feed",
+    "simpleName" : "Process",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.Process",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String", "ProcessState" ],
+    "fieldsByName" : {
+      "id" : "String",
+      "state" : "ProcessState"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/Process.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.presenting.feed",
+    "simpleName" : "ProcessState",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.ProcessState",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/ProcessState.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.presenting.present",
+    "simpleName" : "BrewingServiceClient",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.present.BrewingServiceClient",
+    "kind" : "INTERFACE",
+    "annotations" : [ "FeignClient" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.presenting.present.BrewingServiceClient",
+      "name" : "getIngredients",
+      "returnType" : "String",
+      "parameterTypes" : [ "String", "String", "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/present/BrewingServiceClient.java",
+      "lineNumber" : 13
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/present/BrewingServiceClient.java",
+    "lineNumber" : 11
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.presenting.present",
+    "simpleName" : "PresentController",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.present.PresentController",
+    "kind" : "CLASS",
+    "annotations" : [ "RestController", "RequestMapping" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String", "Logger", "FeedRepository", "ObservationRegistry", "BrewingServiceClient", "RestTemplate", "BaggageManager" ],
+    "fieldsByName" : {
+      "PROCESS_ID_HEADER_NAME" : "String",
+      "log" : "Logger",
+      "feedRepository" : "FeedRepository",
+      "observationRegistry" : "ObservationRegistry",
+      "aggregationServiceClient" : "BrewingServiceClient",
+      "restTemplate" : "RestTemplate",
+      "baggageManager" : "BaggageManager"
+    },
+    "publicMethods" : [ ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/present/PresentController.java",
+    "lineNumber" : 29
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.reporting",
+    "simpleName" : "BeerEvents",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+    "kind" : "CLASS",
+    "annotations" : [ ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "String", "String", "String", "String" ],
+    "fieldsByName" : {
+      "ingredientsOrderedTime" : "String",
+      "brewingStartedTime" : "String",
+      "beerMaturedTime" : "String",
+      "beerBottledTime" : "String"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "getIngredientsOrderedTime",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 12
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "getBrewingStartedTime",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 16
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "getBeerMaturedTime",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 20
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "getBeerBottledTime",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 24
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "setIngredientsOrderedTime",
+      "returnType" : "void",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 28
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "setBrewingStartedTime",
+      "returnType" : "void",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 32
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "setBeerMaturedTime",
+      "returnType" : "void",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 36
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "setBeerBottledTime",
+      "returnType" : "void",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 40
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "equals",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 44
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "hashCode",
+      "returnType" : "int",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 72
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "toString",
+      "returnType" : "String",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 86
+    } ],
+    "protectedMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.BeerEvents",
+      "name" : "canEqual",
+      "returnType" : "boolean",
+      "parameterTypes" : [ "Object" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+      "lineNumber" : 68
+    } ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/BeerEvents.java",
+    "lineNumber" : 3
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.reporting",
+    "simpleName" : "EventListener",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.reporting.EventListener",
+    "kind" : "CLASS",
+    "annotations" : [ "Component" ],
+    "extendsType" : null,
+    "implementsTypes" : [ "Consumer" ],
+    "fieldTypes" : [ "Logger", "ReportingRepository", "ObservationRegistry", "BaggageManager" ],
+    "fieldsByName" : {
+      "log" : "Logger",
+      "reportingRepository" : "ReportingRepository",
+      "observationRegistry" : "ObservationRegistry",
+      "baggageManager" : "BaggageManager"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.EventListener",
+      "name" : "accept",
+      "returnType" : "void",
+      "parameterTypes" : [ "Message" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/EventListener.java",
+      "lineNumber" : 55
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/EventListener.java",
+    "lineNumber" : 16
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.reporting",
+    "simpleName" : "ReportingApplication",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingApplication",
+    "kind" : "CLASS",
+    "annotations" : [ "SpringBootApplication", "Import" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ ],
+    "fieldsByName" : { },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingApplication",
+      "name" : "main",
+      "returnType" : "void",
+      "parameterTypes" : [ "String[]" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/ReportingApplication.java",
+      "lineNumber" : 12
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/ReportingApplication.java",
+    "lineNumber" : 8
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.reporting",
+    "simpleName" : "ReportingController",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingController",
+    "kind" : "CLASS",
+    "annotations" : [ "RestController" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "ReportingRepository" ],
+    "fieldsByName" : {
+      "reportingRepository" : "ReportingRepository"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingController",
+      "name" : "beerEvents",
+      "returnType" : "ResponseEntity",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/ReportingController.java",
+      "lineNumber" : 22
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingController",
+      "name" : "beerEvents",
+      "returnType" : "Set>",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/ReportingController.java",
+      "lineNumber" : 31
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/ReportingController.java",
+    "lineNumber" : 12
+  }, {
+    "packageName" : "io.spring.cloud.samples.brewery.reporting",
+    "simpleName" : "ReportingRepository",
+    "qualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingRepository",
+    "kind" : "CLASS",
+    "annotations" : [ "Component" ],
+    "extendsType" : null,
+    "implementsTypes" : [ ],
+    "fieldTypes" : [ "Map" ],
+    "fieldsByName" : {
+      "eventsDatabase" : "Map"
+    },
+    "publicMethods" : [ {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingRepository",
+      "name" : "createOrUpdate",
+      "returnType" : "void",
+      "parameterTypes" : [ "Event" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/ReportingRepository.java",
+      "lineNumber" : 18
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingRepository",
+      "name" : "read",
+      "returnType" : "BeerEvents",
+      "parameterTypes" : [ "String" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/ReportingRepository.java",
+      "lineNumber" : 39
+    }, {
+      "declaringTypeQualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingRepository",
+      "name" : "read",
+      "returnType" : "Set>",
+      "parameterTypes" : [ ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/ReportingRepository.java",
+      "lineNumber" : 44
+    } ],
+    "protectedMethods" : [ ],
+    "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/ReportingRepository.java",
+    "lineNumber" : 13
+  } ],
+  "packages" : [ {
+    "name" : "",
+    "typeQualifiedNames" : [ "MavenWrapperDownloader" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.BrewingApplication" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.acceptance",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.acceptance.ObservabilityBreweryAcceptanceTests", "io.spring.cloud.samples.brewery.acceptance.SystemPropertyValidityTests", "io.spring.cloud.samples.brewery.acceptance.ServiceDiscoveryAcceptanceTests" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.acceptance.common",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.acceptance.common.SpanUtil", "io.spring.cloud.samples.brewery.acceptance.common.WhatToTest" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.aggregating",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.aggregating.IngredientsProxy", "io.spring.cloud.samples.brewery.aggregating.AggregationConfiguration", "io.spring.cloud.samples.brewery.aggregating.MaturingServiceUpdater", "io.spring.cloud.samples.brewery.aggregating.IngredientsProperties", "io.spring.cloud.samples.brewery.aggregating.IngredientsController", "io.spring.cloud.samples.brewery.aggregating.IngredientsCollector", "io.spring.cloud.samples.brewery.aggregating.IngredientWarehouse", "io.spring.cloud.samples.brewery.aggregating.Collaborators", "io.spring.cloud.samples.brewery.aggregating.IngredientsAggregator" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.bottling",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.bottling.BottlingConfiguration", "io.spring.cloud.samples.brewery.bottling.BottlerService", "io.spring.cloud.samples.brewery.bottling.BottlingWorker", "io.spring.cloud.samples.brewery.bottling.Collaborators", "io.spring.cloud.samples.brewery.bottling.Bottler", "io.spring.cloud.samples.brewery.bottling.PresentingClient" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.common",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.common.CommonConfiguration", "io.spring.cloud.samples.brewery.common.MaturingService", "io.spring.cloud.samples.brewery.common.BottlingService", "io.spring.cloud.samples.brewery.common.TestRequestEntityBuilder", "io.spring.cloud.samples.brewery.common.TestCommunication", "io.spring.cloud.samples.brewery.common.TestConfiguration" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.common.events",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.common.events.EventGateway", "io.spring.cloud.samples.brewery.common.events.Event", "io.spring.cloud.samples.brewery.common.events.EventType" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.common.model",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.common.model.Order", "io.spring.cloud.samples.brewery.common.model.Ingredient", "io.spring.cloud.samples.brewery.common.model.Ingredients", "io.spring.cloud.samples.brewery.common.model.Wort", "io.spring.cloud.samples.brewery.common.model.IngredientType", "io.spring.cloud.samples.brewery.common.model.Version" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.configserver",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.configserver.ConfigServerApplication" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.eureka",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.eureka.EurekaApplication" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.gateway",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.gateway.GatewayApplication" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.ingredients",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.ingredients.IngredientsFetchController", "io.spring.cloud.samples.brewery.ingredients.IngredientsFeignController", "io.spring.cloud.samples.brewery.ingredients.IngredientsConfiguration", "io.spring.cloud.samples.brewery.ingredients.IngredientsApplication", "io.spring.cloud.samples.brewery.ingredients.StubbedIngredientsProperties" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.ingredients.controllers",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.ingredients.controllers.MyController" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.ingredients.services",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.ingredients.services.BottlerServiceX" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.maturing",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.maturing.BrewProperties", "io.spring.cloud.samples.brewery.maturing.BottlingServiceUpdater", "io.spring.cloud.samples.brewery.maturing.Maturer", "io.spring.cloud.samples.brewery.maturing.BrewConfiguration", "io.spring.cloud.samples.brewery.maturing.Collaborators", "io.spring.cloud.samples.brewery.maturing.PresentingServiceClient" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.presenting",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.presenting.PresentingApplication" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.presenting.config",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.presenting.config.Collaborators", "io.spring.cloud.samples.brewery.presenting.config.Versions" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.presenting.feed",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository", "io.spring.cloud.samples.brewery.presenting.feed.FeedController", "io.spring.cloud.samples.brewery.presenting.feed.Process", "io.spring.cloud.samples.brewery.presenting.feed.ProcessState" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.presenting.present",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.presenting.present.BrewingServiceClient", "io.spring.cloud.samples.brewery.presenting.present.PresentController" ]
+  }, {
+    "name" : "io.spring.cloud.samples.brewery.reporting",
+    "typeQualifiedNames" : [ "io.spring.cloud.samples.brewery.reporting.BeerEvents", "io.spring.cloud.samples.brewery.reporting.ReportingApplication", "io.spring.cloud.samples.brewery.reporting.ReportingRepository", "io.spring.cloud.samples.brewery.reporting.ReportingController", "io.spring.cloud.samples.brewery.reporting.EventListener" ]
+  } ],
+  "packageImportDependencies" : {
+    "io.spring.cloud.samples.brewery.acceptance" : [ "io.spring.cloud.samples.brewery.acceptance.common" ],
+    "io.spring.cloud.samples.brewery" : [ "io.spring.cloud.samples.brewery.common" ],
+    "io.spring.cloud.samples.brewery.bottling" : [ "io.spring.cloud.samples.brewery.common", "io.spring.cloud.samples.brewery.common.events", "io.spring.cloud.samples.brewery.common.model" ],
+    "io.spring.cloud.samples.brewery.common" : [ "io.spring.cloud.samples.brewery.common.model" ],
+    "io.spring.cloud.samples.brewery.maturing" : [ "io.spring.cloud.samples.brewery.common", "io.spring.cloud.samples.brewery.common.events", "io.spring.cloud.samples.brewery.common.model" ],
+    "io.spring.cloud.samples.brewery.aggregating" : [ "io.spring.cloud.samples.brewery.common", "io.spring.cloud.samples.brewery.common.events", "io.spring.cloud.samples.brewery.common.model" ],
+    "io.spring.cloud.samples.brewery.reporting" : [ "io.spring.cloud.samples.brewery.common", "io.spring.cloud.samples.brewery.common.events" ],
+    "io.spring.cloud.samples.brewery.ingredients" : [ "io.spring.cloud.samples.brewery.common", "io.spring.cloud.samples.brewery.common.model", "io.spring.cloud.samples.brewery.ingredients.services" ],
+    "io.spring.cloud.samples.brewery.ingredients.controllers" : [ "io.spring.cloud.samples.brewery.ingredients.services" ],
+    "io.spring.cloud.samples.brewery.presenting.present" : [ "io.spring.cloud.samples.brewery.common", "io.spring.cloud.samples.brewery.presenting.config", "io.spring.cloud.samples.brewery.presenting.feed" ],
+    "io.spring.cloud.samples.brewery.presenting" : [ "io.spring.cloud.samples.brewery.common" ],
+    "io.spring.cloud.samples.brewery.presenting.feed" : [ "io.spring.cloud.samples.brewery.presenting.config" ],
+    "io.spring.cloud.samples.brewery.gateway" : [ "io.spring.cloud.samples.brewery.common" ]
+  },
+  "springComponentGraph" : {
+    "projectRoot" : "/Users/jcano/IdeaProjects/brewery",
+    "analyzedAtMillis" : 1777758682376,
+    "components" : [ {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.bottling.BottlingConfiguration",
+      "stereotypes" : [ "Configuration" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/BottlingConfiguration.java",
+      "lineNumber" : 25
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.bottling.Bottler",
+      "stereotypes" : [ "Service" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/bottling/Bottler.java",
+      "lineNumber" : 9
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.common.CommonConfiguration",
+      "stereotypes" : [ "Configuration" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/common/CommonConfiguration.java",
+      "lineNumber" : 19
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.maturing.Maturer",
+      "stereotypes" : [ "Service" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/Maturer.java",
+      "lineNumber" : 8
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.maturing.BrewConfiguration",
+      "stereotypes" : [ "Configuration" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/maturing/BrewConfiguration.java",
+      "lineNumber" : 16
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.AggregationConfiguration",
+      "stereotypes" : [ "Configuration" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/AggregationConfiguration.java",
+      "lineNumber" : 14
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsController",
+      "stereotypes" : [ "RestController" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsController.java",
+      "lineNumber" : 15
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientWarehouse",
+      "stereotypes" : [ "Service" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientWarehouse.java",
+      "lineNumber" : 12
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsAggregator",
+      "stereotypes" : [ "Component" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/brewing/src/main/java/io/spring/cloud/samples/brewery/aggregating/IngredientsAggregator.java",
+      "lineNumber" : 18
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingRepository",
+      "stereotypes" : [ "Component" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/ReportingRepository.java",
+      "lineNumber" : 13
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingController",
+      "stereotypes" : [ "RestController" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/ReportingController.java",
+      "lineNumber" : 12
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.reporting.EventListener",
+      "stereotypes" : [ "Component" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/reporting/src/main/java/io/spring/cloud/samples/brewery/reporting/EventListener.java",
+      "lineNumber" : 16
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.eureka.EurekaApplication",
+      "stereotypes" : [ "Configuration" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/eureka/src/main/java/io/spring/cloud/samples/brewery/eureka/EurekaApplication.java",
+      "lineNumber" : 8
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.common.TestConfiguration",
+      "stereotypes" : [ "Configuration" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/TestConfiguration.java",
+      "lineNumber" : 20
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.common.events.EventGateway",
+      "stereotypes" : [ "Component" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/common/src/main/java/io/spring/cloud/samples/brewery/common/events/EventGateway.java",
+      "lineNumber" : 10
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsFetchController",
+      "stereotypes" : [ "RestController" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/IngredientsFetchController.java",
+      "lineNumber" : 13
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsFeignController",
+      "stereotypes" : [ "RestController" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/IngredientsFeignController.java",
+      "lineNumber" : 13
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsConfiguration",
+      "stereotypes" : [ "Configuration" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/IngredientsConfiguration.java",
+      "lineNumber" : 10
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.controllers.MyController",
+      "stereotypes" : [ "Controller" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/controllers/MyController.java",
+      "lineNumber" : 6
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.ingredients.services.BottlerServiceX",
+      "stereotypes" : [ "Service" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/ingredients/src/main/java/io/spring/cloud/samples/brewery/ingredients/services/BottlerServiceX.java",
+      "lineNumber" : 5
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.present.PresentController",
+      "stereotypes" : [ "RestController" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/present/PresentController.java",
+      "lineNumber" : 29
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository",
+      "stereotypes" : [ "Component" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedRepository.java",
+      "lineNumber" : 17
+    }, {
+      "qualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedController",
+      "stereotypes" : [ "RestController" ],
+      "sourcePath" : "/Users/jcano/IdeaProjects/brewery/presenting/src/main/java/io/spring/cloud/samples/brewery/presenting/feed/FeedController.java",
+      "lineNumber" : 23
+    } ],
+    "injectionEdges" : [ {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.bottling.Bottler",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.bottling.BottlerService",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.bottling.Bottler",
+      "toQualifiedName" : "org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.maturing.Maturer",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.maturing.BottlingServiceUpdater",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsController",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsAggregator",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsController",
+      "toQualifiedName" : "io.micrometer.observation.ObservationRegistry",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsAggregator",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientWarehouse",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsAggregator",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.MaturingServiceUpdater",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsAggregator",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsCollector",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsAggregator",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.common.events.EventGateway",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.aggregating.IngredientsAggregator",
+      "toQualifiedName" : "org.springframework.beans.factory.BeanFactory",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingController",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingRepository",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.reporting.EventListener",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.reporting.ReportingRepository",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.reporting.EventListener",
+      "toQualifiedName" : "io.micrometer.observation.ObservationRegistry",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.reporting.EventListener",
+      "toQualifiedName" : "io.micrometer.tracing.BaggageManager",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.common.events.EventGateway",
+      "toQualifiedName" : "org.springframework.cloud.stream.function.StreamBridge",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsFetchController",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.StubbedIngredientsProperties",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsFetchController",
+      "toQualifiedName" : "io.micrometer.observation.ObservationRegistry",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.IngredientsFeignController",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.ingredients.StubbedIngredientsProperties",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.presenting.present.PresentController",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.presenting.present.PresentController",
+      "toQualifiedName" : "io.micrometer.observation.ObservationRegistry",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.presenting.present.PresentController",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.presenting.present.BrewingServiceClient",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.presenting.present.PresentController",
+      "toQualifiedName" : "org.springframework.web.client.RestTemplate",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.presenting.present.PresentController",
+      "toQualifiedName" : "io.micrometer.tracing.BaggageManager",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedController",
+      "toQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedRepository",
+      "kind" : "CONSTRUCTOR"
+    }, {
+      "fromQualifiedName" : "io.spring.cloud.samples.brewery.presenting.feed.FeedController",
+      "toQualifiedName" : "io.micrometer.observation.ObservationRegistry",
+      "kind" : "CONSTRUCTOR"
+    } ]
+  }
+}

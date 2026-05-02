@@ -1,0 +1,149 @@
+@startuml
+skinparam shadowing false
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam packageStyle rectangle
+
+title Java/Spring Code Model — Abstract Domain Model
+
+package "Structural Layer" #EEF5FF {
+
+  class CodeModel <<record>> {
+    project        : JavaProject
+    packages       : List<JavaPackage>
+    types          : List<JavaType>
+    packageImports : List<PackageImport>
+    springContext  : SpringContext
+  }
+
+  class JavaProject <<record>> {
+    projectRoot    : String
+    savedAtMillis  : long
+    formatVersion  : int
+  }
+
+  class JavaPackage <<record>> {
+    qualifiedName       : String
+    typeQualifiedNames  : List<String>
+  }
+
+  class JavaType <<record>> {
+    qualifiedName       : String
+    simpleName          : String
+    packageName         : String
+    kind                : TypeKind
+    annotations         : List<String>
+    extendsTypeName     : String?
+    implementsTypeNames : List<String>
+    sourcePath          : String?
+    lineNumber          : int
+  }
+
+  enum TypeKind {
+    CLASS
+    INTERFACE
+    ENUM
+    ANNOTATION
+    RECORD
+  }
+
+  class JavaField <<record>> {
+    name     : String
+    typeName : String
+  }
+
+  class JavaMethod <<record>> {
+    name               : String
+    visibility         : Visibility
+    returnTypeName     : String
+    parameterTypeNames : List<String>
+    sourcePath         : String?
+    lineNumber         : int
+  }
+
+  enum Visibility {
+    PUBLIC
+    PROTECTED
+    PACKAGE_PRIVATE
+    PRIVATE
+  }
+
+  class PackageImport <<record>> {
+    fromPackage : String
+    toPackage   : String
+  }
+}
+
+package "Spring Layer" #EFFFEF {
+
+  class SpringContext <<record>> {
+    projectRoot       : String
+    analyzedAtMillis  : long
+    beans             : List<SpringBean>
+    injections        : List<BeanInjection>
+  }
+
+  class SpringBean <<record>> {
+    typeQualifiedName : String
+    stereotypes       : Set<String>
+    sourcePath        : String?
+    lineNumber        : int
+  }
+
+  class BeanInjection <<record>> {
+    fromQualifiedName : String
+    toQualifiedName   : String?
+    toTypeSimpleName  : String?
+    kind              : InjectionKind
+    qualifier         : String?
+  }
+
+  enum InjectionKind {
+    CONSTRUCTOR
+    FIELD
+    SETTER
+  }
+}
+
+package "Ports" #FFF8EE {
+
+  interface CodeModelStore {
+    + save(model: CodeModel) : void
+    + load(projectRoot: String) : CodeModel
+  }
+
+  interface DiagramRenderer {
+    + render(model: CodeModel) : String
+  }
+}
+
+' ── Structural composition ────────────────────────────────────────
+CodeModel "1" *-down- "1"     JavaProject       : project
+CodeModel "1" *-down- "0..*"  JavaPackage       : packages
+CodeModel "1" *-down- "0..*"  JavaType          : types
+CodeModel "1" *-down- "0..*"  PackageImport     : packageImports
+CodeModel "1" *-down- "1"     SpringContext      : springContext
+
+JavaType  "1" *-right- "0..*" JavaField         : fields
+JavaType  "1" *-right- "0..*" JavaMethod        : methods
+JavaType  -right-> TypeKind                      : kind
+JavaMethod -right-> Visibility                   : visibility
+
+' ── Spring composition ───────────────────────────────────────────
+SpringContext "1" *-down- "0..*" SpringBean      : beans
+SpringContext "1" *-down- "0..*" BeanInjection   : injections
+BeanInjection -right-> InjectionKind              : kind
+
+' ── Cross-layer references (by name) ────────────────────────────
+SpringBean ..> JavaType         : typeQualifiedName →
+BeanInjection ..> SpringBean    : fromQualifiedName →
+BeanInjection ..> JavaType      : toQualifiedName → (nullable)
+JavaPackage ..> JavaType        : typeQualifiedNames →
+PackageImport ..> JavaPackage   : fromPackage / toPackage →
+
+' ── Port usage ───────────────────────────────────────────────────
+CodeModelStore ..> CodeModel    : reads / writes
+DiagramRenderer ..> CodeModel   : reads
+
+@enduml
