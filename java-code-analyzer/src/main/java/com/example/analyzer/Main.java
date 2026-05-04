@@ -7,6 +7,8 @@ import com.example.analyzer.model.SpringComponent;
 import com.example.analyzer.model.SpringComponentGraph;
 import com.example.analyzer.model.TypeInfo;
 import com.example.analyzer.persistence.AnalyzerSnapshot;
+import com.example.analyzer.persistence.ChromaAnalyzerSnapshotStore;
+import com.example.analyzer.persistence.ChromaQueryResult;
 import com.example.analyzer.persistence.CouchbaseSpringGraphStore;
 import com.example.analyzer.persistence.JsonAnalyzerSnapshotStore;
 import com.example.analyzer.persistence.JsonSpringGraphStore;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -173,7 +176,8 @@ public class Main {
         System.out.println("Ready. Commands: packages | types <pkg> | methods <package|class> | controllers | services | ...");
         System.out.println("  spring-beans | spring-wiring | spring-controller-service-diagram");
         System.out.println("  persist-model <file> | persist-model-db | load-model-db <root> | persist-spring-json <file>");
-        System.out.println("  persist-spring-neo4j | persist-spring-couchbase");
+        System.out.println("  persist-spring-neo4j | persist-spring-couchbase | persist-spring-chroma");
+        System.out.println("  query-chroma <text> [n] | query-chroma-beans <text> [n] | query-chroma-wiring <text> [n]");
         System.out.println("  package-dependencies-diagram - package graph .puml + .svg (kroki) in cwd");
         System.out.println("  class-diagram <package> - class diagram .puml + .svg for types in package (kroki)");
         System.out.println("  sequence <method> [depth] [--svg <file>] | sequence <FQN> <method> ...");
@@ -482,6 +486,148 @@ public class Main {
                         System.out.println("Spring graph upserted into Couchbase bucket \"" + bucket + "\".");
                         break;
                     }
+                    case "persist-spring-chroma": {
+                        String chromaUrl = firstNonBlank(
+                            System.getenv("CHROMA_URL"),
+                            loadAppProperties().getProperty("analyzer.chroma.url"),
+                            "http://localhost:8001"
+                        );
+                        try {
+                            ChromaAnalyzerSnapshotStore chromaStore =
+                                new ChromaAnalyzerSnapshotStore(chromaUrl);
+                            String summary = chromaStore.upsertSnapshot(
+                                AnalyzerSnapshot.capture(model, springGraph));
+                            System.out.println(summary);
+                        } catch (Exception ex) {
+                            System.err.println("persist-spring-chroma failed: "
+                                + (ex.getMessage() != null ? ex.getMessage() : ex.toString()));
+                        }
+                        break;
+                    }
+                    case "query-chroma": {
+                        if (arg.isBlank()) {
+                            System.out.println("Usage: query-chroma <text> [n]  — semantic search over types");
+                            break;
+                        }
+                        String[] qParts = arg.split("\\s+");
+                        int n = 5;
+                        String queryText = arg;
+                        try {
+                            n = Integer.parseInt(qParts[qParts.length - 1]);
+                            queryText = String.join(" ",
+                                java.util.Arrays.copyOf(qParts, qParts.length - 1));
+                        } catch (NumberFormatException ignored) {}
+                        String chromaUrl = firstNonBlank(
+                            System.getenv("CHROMA_URL"),
+                            loadAppProperties().getProperty("analyzer.chroma.url"),
+                            "http://localhost:8001"
+                        );
+                        try {
+                            ChromaAnalyzerSnapshotStore chromaStore =
+                                new ChromaAnalyzerSnapshotStore(chromaUrl);
+                            List<ChromaQueryResult> results =
+                                chromaStore.queryTypes(model.getProjectRoot(), queryText, n);
+                            if (results.isEmpty()) {
+                                System.out.println("No results. Run persist-spring-chroma first.");
+                            } else {
+                                for (ChromaQueryResult r : results) {
+                                    System.out.printf("  [%.3f] %s%n", r.similarity(), r.qualifiedName());
+                                    if (!r.sourcePath().isBlank()) {
+                                        System.out.printf("         %s:%d%n", r.sourcePath(), r.lineNumber());
+                                    }
+                                }
+                            }
+                        } catch (Exception ex) {
+                            System.err.println("query-chroma failed: "
+                                + (ex.getMessage() != null ? ex.getMessage() : ex.toString()));
+                        }
+                        break;
+                    }
+                    case "query-chroma-wiring": {
+                        if (arg.isBlank()) {
+                            System.out.println("Usage: query-chroma-wiring <text> [n]");
+                            System.out.println("  e.g.: query-chroma-wiring services used by BeerController");
+                            System.out.println("        query-chroma-wiring what repositories does BeerService use");
+                            break;
+                        }
+                        String[] qParts = arg.split("\\s+");
+                        int n = 5;
+                        String queryText = arg;
+                        try {
+                            n = Integer.parseInt(qParts[qParts.length - 1]);
+                            queryText = String.join(" ",
+                                java.util.Arrays.copyOf(qParts, qParts.length - 1));
+                        } catch (NumberFormatException ignored) {}
+                        String chromaUrl = firstNonBlank(
+                            System.getenv("CHROMA_URL"),
+                            loadAppProperties().getProperty("analyzer.chroma.url"),
+                            "http://localhost:8001"
+                        );
+                        try {
+                            ChromaAnalyzerSnapshotStore chromaStore =
+                                new ChromaAnalyzerSnapshotStore(chromaUrl);
+                            List<ChromaQueryResult> results =
+                                chromaStore.queryWiring(model.getProjectRoot(), queryText, n);
+                            if (results.isEmpty()) {
+                                System.out.println("No results. Run persist-spring-chroma first.");
+                            } else {
+                                for (ChromaQueryResult r : results) {
+                                    System.out.printf("  [%.3f] %s%n", r.similarity(), r.document());
+                                    Map<String, Object> m = r.metadata();
+                                    System.out.printf("         relation=%s  from=%s  to=%s%n",
+                                        m.getOrDefault("relation", ""),
+                                        m.getOrDefault("from_simple", ""),
+                                        m.getOrDefault("to_simple", ""));
+                                }
+                            }
+                        } catch (Exception ex) {
+                            System.err.println("query-chroma-wiring failed: "
+                                + (ex.getMessage() != null ? ex.getMessage() : ex.toString()));
+                        }
+                        break;
+                    }
+                    case "query-chroma-beans": {
+                        if (arg.isBlank()) {
+                            System.out.println("Usage: query-chroma-beans <text> [n]  — semantic search over Spring beans");
+                            break;
+                        }
+                        String[] qParts = arg.split("\\s+");
+                        int n = 5;
+                        String queryText = arg;
+                        try {
+                            n = Integer.parseInt(qParts[qParts.length - 1]);
+                            queryText = String.join(" ",
+                                java.util.Arrays.copyOf(qParts, qParts.length - 1));
+                        } catch (NumberFormatException ignored) {}
+                        String chromaUrl = firstNonBlank(
+                            System.getenv("CHROMA_URL"),
+                            loadAppProperties().getProperty("analyzer.chroma.url"),
+                            "http://localhost:8001"
+                        );
+                        try {
+                            ChromaAnalyzerSnapshotStore chromaStore =
+                                new ChromaAnalyzerSnapshotStore(chromaUrl);
+                            List<ChromaQueryResult> results =
+                                chromaStore.queryBeans(model.getProjectRoot(), queryText, n);
+                            if (results.isEmpty()) {
+                                System.out.println("No results. Run persist-spring-chroma first.");
+                            } else {
+                                for (ChromaQueryResult r : results) {
+                                    System.out.printf("  [%.3f] %s  %s%n",
+                                        r.similarity(),
+                                        r.qualifiedName(),
+                                        r.metadata().getOrDefault("stereotypes", ""));
+                                    if (!r.sourcePath().isBlank()) {
+                                        System.out.printf("         %s:%d%n", r.sourcePath(), r.lineNumber());
+                                    }
+                                }
+                            }
+                        } catch (Exception ex) {
+                            System.err.println("query-chroma-beans failed: "
+                                + (ex.getMessage() != null ? ex.getMessage() : ex.toString()));
+                        }
+                        break;
+                    }
                     default:
                         System.out.println("Unknown command. Type 'help'.");
                 }
@@ -606,6 +752,11 @@ public class Main {
         System.out.println("  persist-spring-json <file> - save beans + wiring as JSON only");
         System.out.println("  persist-spring-neo4j  - upsert graph (NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD, NEO4J_DATABASE)");
         System.out.println("  persist-spring-couchbase - upsert docs (COUCHBASE_* env vars)");
+        System.out.println("  persist-spring-chroma - upsert types + beans to ChromaDB (CHROMA_URL or analyzer.chroma.url)");
+        System.out.println("  query-chroma <text> [n]         - semantic search over types");
+        System.out.println("  query-chroma-beans <text> [n]   - semantic search over Spring beans");
+        System.out.println("  query-chroma-wiring <text> [n]  - semantic search over relationships");
+        System.out.println("      e.g.: query-chroma-wiring services used by BeerController");
         System.out.println("  sequence <method|class> [depth] [--svg <file>] - sequence diagram; writes .puml in cwd; class → pick #");
         System.out.println("  seq-diagram           - alias of sequence");
         System.out.println("  ↑/↓                   - recall last " + COMMAND_HISTORY_SIZE + " commands (interactive terminal)");
@@ -859,11 +1010,11 @@ public class Main {
         System.err.println("  java -jar java-code-analyzer.jar --db                     # list DB project roots");
     }
 
-    private static String firstNonBlank(String a, String b) {
-        if (a != null && !a.isBlank()) {
-            return a;
+    private static String firstNonBlank(String... values) {
+        for (String v : values) {
+            if (v != null && !v.isBlank()) return v;
         }
-        return b != null ? b : "";
+        return "";
     }
 
     /** Builds a {@link HikariDataSource} from {@code application.properties} on the classpath. */

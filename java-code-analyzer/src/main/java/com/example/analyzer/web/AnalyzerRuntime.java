@@ -13,6 +13,8 @@ import com.example.analyzer.model.SpringComponent;
 import com.example.analyzer.model.SpringComponentGraph;
 import com.example.analyzer.model.TypeInfo;
 import com.example.analyzer.persistence.AnalyzerSnapshot;
+import com.example.analyzer.persistence.ChromaAnalyzerSnapshotStore;
+import com.example.analyzer.persistence.ChromaQueryResult;
 import com.example.analyzer.persistence.SqlAnalyzerSnapshotStore;
 import com.example.analyzer.persistence.JsonAnalyzerSnapshotStore;
 import com.example.analyzer.persistence.JsonSpringGraphStore;
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 @Component
@@ -41,10 +44,17 @@ public class AnalyzerRuntime {
     private MatrixExporter exporter;
     private final Path workingDir;
     private final SqlAnalyzerSnapshotStore sqlStore;
+    private final String chromaUrl;
 
     public AnalyzerRuntime(Environment env, SqlAnalyzerSnapshotStore sqlStore) throws Exception {
         this.sqlStore   = sqlStore;
         this.workingDir = Path.of(System.getProperty("user.dir"));
+        this.chromaUrl  = firstNonBlank(
+            env.getProperty("analyzer.chroma.url"),
+            System.getProperty("analyzer.chroma.url"),
+            System.getenv("CHROMA_URL"),
+            "http://localhost:8001"
+        );
 
         String startupSource = firstNonBlank(
             env.getProperty("analyzer.startup.source"),
@@ -133,6 +143,10 @@ public class AnalyzerRuntime {
                 case "persist-model" -> persistModelResult(arg);
                 case "persist-model-db" -> persistModelDbResult();
                 case "load-model-db" -> loadModelDbResult(arg);
+                case "persist-spring-chroma" -> persistSpringChromaResult();
+                case "query-chroma" -> queryChromaResult(arg, false);
+                case "query-chroma-beans" -> queryChromaResult(arg, true);
+                case "query-chroma-wiring" -> queryChromaWiringResult(arg);
                 default -> CommandResult.error("Unknown command. Type 'help'.");
             };
         } catch (Exception e) {
@@ -149,7 +163,10 @@ public class AnalyzerRuntime {
             "sequence <fqn> <method> [depth] [--svg <file>]",
             "export-csv <dir>", "export-html <file>",
             "persist-spring-json <file>", "persist-model <file>",
-            "persist-model-db", "load-model-db <projectRoot>"
+            "persist-model-db", "load-model-db <projectRoot>",
+            "persist-spring-chroma",
+            "query-chroma <text> [n]", "query-chroma-beans <text> [n]",
+            "query-chroma-wiring <text> [n]"
         );
     }
 
@@ -370,6 +387,78 @@ public class AnalyzerRuntime {
             model.getPackages().size(),
             model.getTypesByQualifiedName().size(),
             springGraph.getComponents().size()));
+    }
+
+    private CommandResult persistSpringChromaResult() throws IOException {
+        ChromaAnalyzerSnapshotStore store = new ChromaAnalyzerSnapshotStore(chromaUrl);
+        String summary = store.upsertSnapshot(AnalyzerSnapshot.capture(model, springGraph));
+        return CommandResult.ok(summary);
+    }
+
+    private CommandResult queryChromaResult(String arg, boolean beansMode) throws IOException {
+        String label = beansMode ? "query-chroma-beans" : "query-chroma";
+        if (arg.isBlank()) {
+            return CommandResult.error("Usage: " + label + " <text> [n]");
+        }
+        String[] parts = arg.split("\\s+");
+        int n = 5;
+        String queryText = arg;
+        try {
+            n = Integer.parseInt(parts[parts.length - 1]);
+            queryText = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+        } catch (NumberFormatException ignored) {}
+
+        ChromaAnalyzerSnapshotStore store = new ChromaAnalyzerSnapshotStore(chromaUrl);
+        List<ChromaQueryResult> results = beansMode
+            ? store.queryBeans(model.getProjectRoot(), queryText, n)
+            : store.queryTypes(model.getProjectRoot(), queryText, n);
+
+        if (results.isEmpty()) {
+            return CommandResult.error("No results. Run persist-spring-chroma first.");
+        }
+        List<String> lines = new ArrayList<>();
+        for (ChromaQueryResult r : results) {
+            lines.add(String.format("  [%.3f] %s", r.similarity(), r.qualifiedName()));
+            if (!r.sourcePath().isBlank()) {
+                lines.add(String.format("         %s:%d", r.sourcePath(), r.lineNumber()));
+            }
+        }
+        return CommandResult.ok(String.join("\n", lines));
+    }
+
+    private CommandResult queryChromaWiringResult(String arg) throws IOException {
+        if (arg.isBlank()) {
+            return CommandResult.error(
+                "Usage: query-chroma-wiring <text> [n]\n"
+                + "  e.g.: query-chroma-wiring services used by BeerController\n"
+                + "        query-chroma-wiring what repositories does BeerService access\n"
+                + "        query-chroma-wiring who injects BrewingService");
+        }
+        String[] parts = arg.split("\\s+");
+        int n = 5;
+        String queryText = arg;
+        try {
+            n = Integer.parseInt(parts[parts.length - 1]);
+            queryText = String.join(" ", Arrays.copyOf(parts, parts.length - 1));
+        } catch (NumberFormatException ignored) {}
+
+        ChromaAnalyzerSnapshotStore store = new ChromaAnalyzerSnapshotStore(chromaUrl);
+        List<ChromaQueryResult> results =
+            store.queryWiring(model.getProjectRoot(), queryText, n);
+
+        if (results.isEmpty()) {
+            return CommandResult.error("No results. Run persist-spring-chroma first.");
+        }
+        List<String> lines = new ArrayList<>();
+        for (ChromaQueryResult r : results) {
+            lines.add(String.format("  [%.3f] %s", r.similarity(), r.document().split("\n")[0]));
+            Map<String, Object> m = r.metadata();
+            lines.add(String.format("         relation=%-14s  from=%-30s  to=%s",
+                m.getOrDefault("relation", ""),
+                m.getOrDefault("from_simple", ""),
+                m.getOrDefault("to_simple", "")));
+        }
+        return CommandResult.ok(String.join("\n", lines));
     }
 
     private String helpText() {

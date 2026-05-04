@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spring Component Analyzer</title>
+  <style>
+    /* ── Reset & base ──────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #0f1117;
+      --surface:  #1a1d27;
+      --border:   #2a2d3e;
+      --accent:   #6c63ff;
+      --accent2:  #48c774;
+      --danger:   #ff5c5c;
+      --warn:     #ffab40;
+      --text:     #e2e8f0;
+      --muted:    #8892a4;
+      --mono:     'JetBrains Mono', 'Fira Code', Consolas, monospace;
+    }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px; display: flex; height: 100vh; overflow: hidden;
+    }
+
+    /* ── Sidebar ───────────────────────────────────────────────────────────── */
+    aside {
+      width: 220px; background: var(--surface); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; padding: 16px 0; flex-shrink: 0;
+    }
+    .brand {
+      padding: 0 16px 20px; font-size: 13px; font-weight: 700;
+      color: var(--accent); letter-spacing: .5px; text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand span { display: block; font-size: 10px; color: var(--muted); font-weight: 400;
+                  text-transform: none; letter-spacing: 0; margin-top: 2px; }
+    nav { margin-top: 12px; flex: 1; }
+    nav button {
+      width: 100%; text-align: left; padding: 10px 16px;
+      background: none; border: none; color: var(--muted);
+      cursor: pointer; font-size: 13px; transition: all .15s; border-left: 3px solid transparent;
+    }
+    nav button:hover   { color: var(--text); background: rgba(255,255,255,.04); }
+    nav button.active  { color: var(--accent); border-left-color: var(--accent);
+                         background: rgba(108,99,255,.08); }
+    .nav-section { font-size: 10px; color: var(--muted); padding: 16px 16px 4px;
+                   text-transform: uppercase; letter-spacing: .8px; }
+
+    /* ── Main ──────────────────────────────────────────────────────────────── */
+    main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    header {
+      padding: 16px 24px; border-bottom: 1px solid var(--border);
+      background: var(--surface); display: flex; align-items: center; gap: 12px;
+    }
+    header h1 { font-size: 16px; font-weight: 600; }
+    .project-badge {
+      font-size: 11px; background: rgba(108,99,255,.15); color: var(--accent);
+      padding: 3px 8px; border-radius: 20px; font-family: var(--mono);
+      max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    /* ── Query panel ───────────────────────────────────────────────────────── */
+    .panel { flex: 1; overflow-y: auto; padding: 24px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 20px; margin-bottom: 20px;
+    }
+    .card h2 { font-size: 14px; font-weight: 600; margin-bottom: 14px;
+               color: var(--text); display: flex; align-items: center; gap: 8px; }
+    .card h2 .badge {
+      font-size: 10px; padding: 2px 8px; border-radius: 12px;
+      background: rgba(108,99,255,.2); color: var(--accent); font-weight: 500;
+    }
+
+    /* ── Form elements ─────────────────────────────────────────────────────── */
+    .form-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 200px; }
+    label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+    input, select {
+      padding: 8px 12px; background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; color: var(--text); font-size: 13px; font-family: var(--mono);
+      outline: none; transition: border-color .15s;
+    }
+    input:focus, select:focus { border-color: var(--accent); }
+    input::placeholder { color: var(--muted); }
+    button.btn {
+      padding: 8px 18px; border-radius: 6px; border: none; cursor: pointer;
+      font-size: 13px; font-weight: 600; transition: all .15s; white-space: nowrap;
+    }
+    button.btn-primary  { background: var(--accent); color: #fff; }
+    button.btn-primary:hover  { background: #7c75ff; }
+    button.btn-success  { background: var(--accent2); color: #0f1117; }
+    button.btn-success:hover  { background: #5bda87; }
+    button.btn-danger   { background: var(--danger); color: #fff; }
+    button.btn-danger:hover   { background: #ff7070; }
+
+    /* ── Results table ─────────────────────────────────────────────────────── */
+    .results { margin-top: 16px; }
+    .status-bar {
+      font-size: 11px; color: var(--muted); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .status-bar .count {
+      font-weight: 700; color: var(--text);
+      background: rgba(255,255,255,.06); padding: 1px 6px; border-radius: 4px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { text-align: left; padding: 8px 10px; font-size: 10px; text-transform: uppercase;
+         letter-spacing: .6px; color: var(--muted); border-bottom: 1px solid var(--border); }
+    td { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.04);
+         font-family: var(--mono); vertical-align: top; }
+    tr:hover td { background: rgba(255,255,255,.03); }
+    .pill {
+      display: inline-block; padding: 2px 8px; border-radius: 20px;
+      font-size: 10px; font-weight: 600; font-family: -apple-system, sans-serif;
+    }
+    .pill-CONTROLLER  { background: rgba(108,99,255,.25); color: #a5a0ff; }
+    .pill-SERVICE     { background: rgba(72,199,116,.2);  color: #4ddc82; }
+    .pill-REPOSITORY  { background: rgba(255,171,64,.2);  color: #ffb84d; }
+    .pill-ENTITY      { background: rgba(255,92,92,.2);   color: #ff8080; }
+    .pill-COMPONENT   { background: rgba(100,200,255,.15);color: #64c8ff; }
+    .pill-CONFIGURATION { background: rgba(200,150,255,.2);color: #d0a0ff; }
+    .pill-REST_CLIENT { background: rgba(255,220,100,.2); color: #ffdc64; }
+    .pill-ASPECT      { background: rgba(255,150,100,.2); color: #ff9664; }
+    .pill-INTERFACE   { background: rgba(150,200,150,.2); color: #96c896; }
+    .pill-ENUM        { background: rgba(180,180,180,.15);color: #a0a0a0; }
+    .pill-OTHER       { background: rgba(100,100,100,.2); color: #888; }
+    .pill-INJECTS_CONSTRUCTOR { background: rgba(108,99,255,.2); color: #a5a0ff; }
+    .pill-INJECTS_FIELD       { background: rgba(108,99,255,.15); color: #9990ee; }
+    .pill-EXTENDS     { background: rgba(255,171,64,.2);  color: #ffb84d; }
+    .pill-IMPLEMENTS  { background: rgba(72,199,116,.2);  color: #4ddc82; }
+    .pill-HAS_FIELD   { background: rgba(100,100,100,.15); color: #888; }
+
+    .empty { text-align: center; padding: 32px; color: var(--muted); font-size: 13px; }
+    .spinner { display: inline-block; width: 14px; height: 14px;
+               border: 2px solid var(--border); border-top-color: var(--accent);
+               border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error-msg { color: var(--danger); background: rgba(255,92,92,.1);
+                 padding: 10px 14px; border-radius: 6px; font-size: 12px;
+                 border: 1px solid rgba(255,92,92,.25); }
+    .success-msg { color: var(--accent2); background: rgba(72,199,116,.1);
+                   padding: 10px 14px; border-radius: 6px; font-size: 12px;
+                   border: 1px solid rgba(72,199,116,.25); white-space: pre-wrap; }
+    code { font-family: var(--mono); }
+  </style>
+</head>
+<body>
+
+<aside>
+  <div class="brand">SCA <span>Spring Component Analyzer</span></div>
+  <nav>
+    <div class="nav-section">Analysis</div>
+    <button onclick="showSection('analyze')"    data-section="analyze">⚡ Analyze Project</button>
+    <div class="nav-section">Components</div>
+    <button onclick="showSection('list')"       data-section="list">📋 List All</button>
+    <button onclick="showSection('find')"       data-section="find">🔍 Find by Name</button>
+    <button onclick="showSection('bytype')"     data-section="bytype">🏷️  By Type</button>
+    <div class="nav-section">Endpoints</div>
+    <button onclick="showSection('endpoints')" data-section="endpoints">🌐 REST Endpoints</button>
+    <div class="nav-section">Relationships</div>
+    <button onclick="showSection('deps')"       data-section="deps">↘ Dependencies</button>
+    <button onclick="showSection('dependents')" data-section="dependents">↗ Dependents</button>
+    <button onclick="showSection('wiring')"     data-section="wiring">🔗 Spring Wiring</button>
+    <div class="nav-section">Admin</div>
+    <button onclick="showSection('clear')"      data-section="clear">🗑️  Clear Project</button>
+  </nav>
+</aside>
+
+<main>
+  <header>
+    <h1>Spring Component Analyzer</h1>
+    <div id="projectBadge" class="project-badge" style="display:none"></div>
+  </header>
+
+  <div class="panel">
+
+    <!-- Analyze -->
+    <div id="sec-analyze" class="section">
+      <div class="card">
+        <h2>⚡ Analyze Project <span class="badge">Couchbase</span></h2>
+        <div class="form-row">
+          <div class="form-group" style="flex:3">
+            <label>Project Root</label>
+            <input id="analyzeRoot" type="text" placeholder="/Users/me/IdeaProjects/my-spring-project" />
+          </div>
+          <button class="btn btn-success" onclick="runAnalyze()">Analyze</button>
+        </div>
+        <div id="analyzeResult" class="results"></div>
+      </div>
+    </div>
+
+    <!-- List Components -->
+    <div id="sec-list" class="section" style="display:none">
+      <div class="card">
+        <h2>📋 All Components</h2>
+        <div class="form-row">
+          <div class="form-group" style="flex:3">
+            <label>Project Root</label>
+            <input id="listRoot" type="text" placeholder="/path/to/project" />
+          </div>
+          <button class="btn btn-primary" onclick="runList()">Load</button>
+        </div>
+        <div id="listResult" class="results"></div>
+      </div>
+    </div>
+
+    <!-- Find -->
+    <div id="sec-find" class="section" style="display:none">
+      <div class="card">
+        <h2>🔍 Find Component by Name</h2>
+        <div class="form-row">
+          <div class="form-group" style="flex:3">
+            <label>Project Root</label>
+            <input id="findRoot" type="text" placeholder="/path/to/project" />
+          </div>
+          <div class="form-group" style="flex:2">
+            <label>Name (partial match)</label>
+            <input id="findName" type="text" placeholder="BeerController" />
+          </div>
+          <button class="btn btn-primary" onclick="runFind()">Find</button>
+        </div>
+        <div id="findResult" class="results"></div>
+      </div>
+    </div>
+
+    <!-- By Type -->
+    <div id="sec-bytype" class="section" style="display:none">
+      <div class="card">
+        <h2>🏷️  Components by Type</h2>
+        <div class="form-row">
+          <div class="form-group" style="flex:3">
+            <label>Project Root</label>
+            <input id="typeRoot" type="text" placeholder="/path/to/project" />
+          </div>
+          <div class="form-group">
+            <label>Stereotype</label>
+            <select id="typeSelect">
+              <option value="CONTROLLER">Controller</option>
+              <option value="SERVICE">Service</option>
+              <option value="REPOSITORY">Repository</option>
+              <option value="ENTITY">Entity</option>
+              <option value="COMPONENT">Component</option>
+              <option value="CONFIGURATION">Configuration</option>
+              <option value="REST_CLIENT">REST Client</option>
+              <option value="ASPECT">Aspect</option>
+              <option value="INTERFACE">Interface</option>
+              <option value="ENUM">Enum</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="runByType()">Load</button>
+        </div>
+        <div id="typeResult" class="results"></div>
+      </div>
+    </div>
+
+    <!-- REST Endpoints -->
+    <div id="sec-endpoints" class="section" style="display:none">
+      <div class="card">
+        <h2>🌐 REST Endpoints <span class="badge">HTTP</span></h2>
+        <div class="form-row">
+          <div class="form-group" style="flex:3">
+            <label>Project Root</label>
+            <input id="epRoot" type="text" placeholder="/path/to/project" />
+          </div>
+          <div class="form-group">
+            <label>HTTP Method</label>
+            <select id="epMethod">
+              <option value="">All</option>
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+              <option value="PATCH">PATCH</option>
+              <option value="ANY">ANY</option>
+            </select>
+          </div>
+          <div class="form-group" style="flex:2">
+            <label>Controller name</label>
+            <input id="epController" type="text" placeholder="BeerController" />
+          </div>
+          <div class="form-group" style="flex:2">
+            <label>Path fragment</label>
+            <input id="epPath" type="text" placeholder="/api/v1" />
+          </div>
+          <button class="btn btn-primary" onclick="runEndpoints()">Load</button>
+        </div>
+        <div id="epResult" class="results"></div>
+      </div>
+    </div>
+
+    <!-- Dependencies -->
+    <div id="sec-deps" class="section" style="display:none">
+      <div class="card">
+        <h2>↘ Dependencies <small style="color:var(--muted);font-weight:400;font-size:12px">— what does X use?</small></h2>
+        <div class="form-row">
+          <div class="form-group" style="flex:3">
+            <label>Project Root</label>
+            <input id="depsRoot" type="text" placeholder="/path/to/project" />
+          </div>
+          <div class="form-group" style="flex:2">
+            <label>Component Name</label>
+            <input id="depsName" type="text" placeholder="BeerController" />
+          </div>
+          <button class="btn btn-primary" onclick="runDeps()">Query</button>
+        </div>
+        <div id="depsResult" class="results"></div>
+      </div>
+    </div>
+
+    <!-- Dependents -->
+    <div id="sec-dependents" class="section" style="display:none">
+      <div class="card">
+        <h2>↗ Dependents <small style="color:var(--muted);font-weight:400;font-size:12px">— what uses X?</small></h2>
+        <div class="form-row">
+          <div class="form-group" style="flex:3">
+            <label>Project Root</label>
+            <input id="dependentsRoot" type="text" placeholder="/path/to/project" />
+          </div>
+          <div class="form-group" style="flex:2">
+            <label>Component Name</label>
+            <input id="dependentsName" type="text" placeholder="BeerService" />
+          </div>
+          <button class="btn btn-primary" onclick="runDependents()">Query</button>
+        </div>
+        <div id="dependentsResult" class="results"></div>
+      </div>
+    </div>
+
+    <!-- Wiring -->
+    <div id="sec-wiring" class="section" style="display:none">
+      <div class="card">
+        <h2>🔗 Spring Wiring</h2>
+        <div class="form-row">
+          <div class="form-group" style="flex:3">
+            <label>Project Root</label>
+            <input id="wiringRoot" type="text" placeholder="/path/to/project" />
+          </div>
+          <div class="form-group">
+            <label>Layer</label>
+            <select id="wiringLayer">
+              <option value="controller-service">Controller → Service</option>
+              <option value="service-repository">Service → Repository</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="runWiring()">Load</button>
+        </div>
+        <div id="wiringResult" class="results"></div>
+      </div>
+    </div>
+
+    <!-- Clear -->
+    <div id="sec-clear" class="section" style="display:none">
+      <div class="card">
+        <h2>🗑️ Clear Project Data</h2>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:14px">
+          Removes all components and relationships for a project from Couchbase.
+        </p>
+        <div class="form-row">
+          <div class="form-group" style="flex:3">
+            <label>Project Root</label>
+            <input id="clearRoot" type="text" placeholder="/path/to/project" />
+          </div>
+          <button class="btn btn-danger" onclick="runClear()">Clear</button>
+        </div>
+        <div id="clearResult" class="results"></div>
+      </div>
+    </div>
+
+  </div><!-- .panel -->
+</main>
+
+<script>
+const API = '/api/v1/analyzer';
+
+// ── Shared project root across sections ──────────────────────────────────────
+let globalProject = localStorage.getItem('sca-project') || '';
+const rootInputs = () => document.querySelectorAll('input[id$="Root"]');
+function syncProject(val) {
+  globalProject = val;
+  localStorage.setItem('sca-project', val);
+  document.getElementById('projectBadge').textContent = val || '';
+  document.getElementById('projectBadge').style.display = val ? 'block' : 'none';
+  rootInputs().forEach(i => { if (!i.value) i.value = val; });
+}
+rootInputs().forEach(i => i.addEventListener('blur', () => {
+  if (i.value) syncProject(i.value);
+}));
+if (globalProject) syncProject(globalProject);
+
+// ── Navigation ───────────────────────────────────────────────────────────────
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + name).style.display = 'block';
+  document.querySelector(`[data-section="${name}"]`).classList.add('active');
+  // Pre-fill project root
+  const ri = document.getElementById(name === 'bytype' ? 'typeRoot' :
+             name === 'dependents' ? 'dependentsRoot' :
+             name === 'endpoints' ? 'epRoot' : name + 'Root');
+  if (ri && !ri.value) ri.value = globalProject;
+}
+showSection('analyze');
+
+// ── API helpers ───────────────────────────────────────────────────────────────
+async function apiGet(path) {
+  const r = await fetch(API + path);
+  if (!r.ok) throw new Error(`HTTP ${r.status}: ${await r.text()}`);
+  return r.json();
+}
+async function apiPost(path, body) {
+  const r = await fetch(API + path, {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) throw new Error(`HTTP ${r.status}: ${await r.text()}`);
+  return r.json();
+}
+async function apiDelete(path) {
+  const r = await fetch(API + path, { method: 'DELETE' });
+  if (!r.ok) throw new Error(`HTTP ${r.status}: ${await r.text()}`);
+  return r.json();
+}
+
+function loading(id) {
+  document.getElementById(id).innerHTML =
+    '<div class="status-bar"><div class="spinner"></div> Running…</div>';
+}
+function showError(id, msg) {
+  document.getElementById(id).innerHTML = `<div class="error-msg">${escHtml(msg)}</div>`;
+}
+function showMsg(id, msg) {
+  document.getElementById(id).innerHTML = `<div class="success-msg">${escHtml(msg)}</div>`;
+}
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function pill(val) {
+  return `<span class="pill pill-${val}">${val}</span>`;
+}
+
+// ── Analyze ───────────────────────────────────────────────────────────────────
+async function runAnalyze() {
+  const root = document.getElementById('analyzeRoot').value.trim();
+  if (!root) { showError('analyzeResult','Enter a project root path.'); return; }
+  syncProject(root);
+  loading('analyzeResult');
+  try {
+    const d = await apiPost('/analyze', { projectRoot: root });
+    showMsg('analyzeResult', d.message);
+  } catch(e) { showError('analyzeResult', e.message); }
+}
+
+// ── List ──────────────────────────────────────────────────────────────────────
+async function runList() {
+  const root = document.getElementById('listRoot').value.trim();
+  loading('listResult');
+  try {
+    const data = await apiGet(`/components?project=${enc(root)}`);
+    renderComponents('listResult', data);
+  } catch(e) { showError('listResult', e.message); }
+}
+
+// ── Find ──────────────────────────────────────────────────────────────────────
+async function runFind() {
+  const root = document.getElementById('findRoot').value.trim();
+  const name = document.getElementById('findName').value.trim();
+  loading('findResult');
+  try {
+    const data = await apiGet(`/find?project=${enc(root)}&name=${enc(name)}`);
+    renderComponents('findResult', data);
+  } catch(e) { showError('findResult', e.message); }
+}
+
+// ── By Type ───────────────────────────────────────────────────────────────────
+async function runByType() {
+  const root = document.getElementById('typeRoot').value.trim();
+  const type = document.getElementById('typeSelect').value;
+  loading('typeResult');
+  try {
+    const data = await apiGet(`/components?project=${enc(root)}&type=${type}`);
+    renderComponents('typeResult', data);
+  } catch(e) { showError('typeResult', e.message); }
+}
+
+// ── REST Endpoints ────────────────────────────────────────────────────────────
+async function runEndpoints() {
+  const root  = document.getElementById('epRoot').value.trim();
+  const meth  = document.getElementById('epMethod').value;
+  const ctrl  = document.getElementById('epController').value.trim();
+  const path  = document.getElementById('epPath').value.trim();
+  loading('epResult');
+  try {
+    let url = `/endpoints?project=${enc(root)}`;
+    if (ctrl)  url += `&controller=${enc(ctrl)}`;
+    else if (meth) url += `&method=${enc(meth)}`;
+    else if (path) url += `&path=${enc(path)}`;
+    const data = await apiGet(url);
+    renderEndpoints('epResult', data);
+  } catch(e) { showError('epResult', e.message); }
+}
+
+// ── Dependencies ──────────────────────────────────────────────────────────────
+async function runDeps() {
+  const root = document.getElementById('depsRoot').value.trim();
+  const name = document.getElementById('depsName').value.trim();
+  loading('depsResult');
+  try {
+    const data = await apiGet(`/dependencies?project=${enc(root)}&name=${enc(name)}`);
+    renderRelationships('depsResult', data);
+  } catch(e) { showError('depsResult', e.message); }
+}
+
+// ── Dependents ────────────────────────────────────────────────────────────────
+async function runDependents() {
+  const root = document.getElementById('dependentsRoot').value.trim();
+  const name = document.getElementById('dependentsName').value.trim();
+  loading('dependentsResult');
+  try {
+    const data = await apiGet(`/dependents?project=${enc(root)}&name=${enc(name)}`);
+    renderRelationships('dependentsResult', data);
+  } catch(e) { showError('dependentsResult', e.message); }
+}
+
+// ── Wiring ────────────────────────────────────────────────────────────────────
+async function runWiring() {
+  const root  = document.getElementById('wiringRoot').value.trim();
+  const layer = document.getElementById('wiringLayer').value;
+  loading('wiringResult');
+  try {
+    const data = await apiGet(`/wiring/${layer}?project=${enc(root)}`);
+    renderRelationships('wiringResult', data);
+  } catch(e) { showError('wiringResult', e.message); }
+}
+
+// ── Clear ─────────────────────────────────────────────────────────────────────
+async function runClear() {
+  const root = document.getElementById('clearRoot').value.trim();
+  if (!root) { showError('clearResult','Enter a project root path.'); return; }
+  if (!confirm(`Clear ALL data for:\n${root}\n\nThis cannot be undone.`)) return;
+  loading('clearResult');
+  try {
+    const d = await apiDelete(`/project?project=${enc(root)}`);
+    showMsg('clearResult', d.message);
+  } catch(e) { showError('clearResult', e.message); }
+}
+
+// ── Renderers ─────────────────────────────────────────────────────────────────
+function enc(s) { return encodeURIComponent(s || ''); }
+
+function renderComponents(id, data) {
+  const el = document.getElementById(id);
+  if (!data || data.length === 0) {
+    el.innerHTML = '<div class="empty">No components found. Run Analyze first.</div>';
+    return;
+  }
+  let html = `<div class="status-bar">Showing <span class="count">${data.length}</span> component(s)</div>`;
+  html += `<table><thead><tr>
+    <th>Type</th><th>Simple Name</th><th>Package</th><th>Source</th>
+  </tr></thead><tbody>`;
+  data.forEach(c => {
+    html += `<tr>
+      <td>${pill(c.componentType)}</td>
+      <td><code>${escHtml(c.simpleName)}</code></td>
+      <td style="color:var(--muted)"><code>${escHtml(c.packageName||'')}</code></td>
+      <td style="color:var(--muted);font-size:11px">${escHtml(shortPath(c.sourcePath||''))}:${c.lineNumber}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+function renderRelationships(id, data) {
+  const el = document.getElementById(id);
+  if (!data || data.length === 0) {
+    el.innerHTML = '<div class="empty">No relationships found.</div>';
+    return;
+  }
+  let html = `<div class="status-bar">Showing <span class="count">${data.length}</span> relationship(s)</div>`;
+  html += `<table><thead><tr>
+    <th>From</th><th>From Type</th><th>Relation</th><th>To</th><th>To Type</th><th>Field</th>
+  </tr></thead><tbody>`;
+  data.forEach(r => {
+    html += `<tr>
+      <td><code>${escHtml(r.fromSimpleName||'')}</code></td>
+      <td>${r.fromType ? pill(r.fromType) : ''}</td>
+      <td>${r.kind ? pill(r.kind) : ''}</td>
+      <td><code>${escHtml(r.toSimpleName||'')}</code></td>
+      <td>${r.toType ? pill(r.toType) : ''}</td>
+      <td style="color:var(--muted);font-size:11px"><code>${escHtml(r.fieldName||'')}</code></td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+function methodBadge(m) {
+  const colors = {GET:'#4ddc82',POST:'#6c9fff',PUT:'#ffb84d',
+                  DELETE:'#ff8080',PATCH:'#d0a0ff',ANY:'#888'};
+  const c = colors[m] || '#888';
+  return `<span style="display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:sans-serif;background:${c}22;color:${c}">${m}</span>`;
+}
+
+function renderEndpoints(id, data) {
+  const el = document.getElementById(id);
+  if (!data || data.length === 0) {
+    el.innerHTML = '<div class="empty">No endpoints found. Run Analyze first.</div>';
+    return;
+  }
+  let html = `<div class="status-bar">Showing <span class="count">${data.length}</span> endpoint(s)</div>`;
+  html += `<table><thead><tr>
+    <th>Method</th><th>Path</th><th>Controller</th><th>Handler</th><th>Return Type</th><th>Parameters</th>
+  </tr></thead><tbody>`;
+  data.forEach(ep => {
+    const params = (ep.parameters || []).map(p => {
+      const b = p.binding && p.binding !== 'NONE' ? `<span style="color:var(--accent);font-size:10px">@${p.binding}</span> ` : '';
+      return `${b}<code>${escHtml(p.type)} ${escHtml(p.name)}</code>`;
+    }).join('<br/>');
+    html += `<tr>
+      <td>${methodBadge(ep.httpMethod)}</td>
+      <td><code style="color:var(--accent2)">${escHtml(ep.path)}</code></td>
+      <td><code>${escHtml(ep.controllerSimpleName)}</code></td>
+      <td><code>${escHtml(ep.handlerMethod)}</code></td>
+      <td style="color:var(--muted)"><code>${escHtml(ep.returnType||'')}</code></td>
+      <td style="font-size:11px">${params || '<span style="color:var(--muted)">—</span>'}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+function shortPath(path) {
+  const parts = path.replace(/\\/g,'/').split('/');
+  // Show last 3 segments
+  return parts.slice(-3).join('/');
+}
+</script>
+</body>
+</html>
